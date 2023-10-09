@@ -21,6 +21,15 @@ KINARA_CUSTOM_FIELDS = {
 			"insert_after": "servicer_fee",
 		},
 	],
+	"Item": [
+		{
+   			"default": "0",
+			"fieldname": "tax_inclusive",
+			"label": "Tax Inclusive",
+			"fieldtype": "Check",
+			"insert_after": "stock_uom",
+		},
+	],
 }
 
 
