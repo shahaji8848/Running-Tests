@@ -122,6 +122,9 @@ override_doctype_class = {
 doc_events = {
 	"Loan Product": {
 		"validate": "kinara_lms.overrides.loan_product.validate_loan_product_code",
+	},
+	"Address": {
+		"validate": "kinara_lms.overrides.address.map_kinara_state_to_system_state",
 	}
 }
 

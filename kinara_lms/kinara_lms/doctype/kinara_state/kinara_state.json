@@ -1,0 +1,99 @@
+{
+ "actions": [],
+ "autoname": "field:state_name",
+ "creation": "2023-10-11 00:32:38.094111",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "country_code",
+  "state_code",
+  "effective_start_date",
+  "modified_at",
+  "system_state_name",
+  "column_break_qkgw",
+  "country_name",
+  "state_name",
+  "effective_end_date",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "country_code",
+   "fieldtype": "Data",
+   "label": "Country Code"
+  },
+  {
+   "fieldname": "state_code",
+   "fieldtype": "Data",
+   "label": "State Code",
+   "unique": 1
+  },
+  {
+   "fieldname": "effective_start_date",
+   "fieldtype": "Data",
+   "label": "Effective Start Date"
+  },
+  {
+   "fieldname": "column_break_qkgw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country_name",
+   "fieldtype": "Data",
+   "label": "Country Name"
+  },
+  {
+   "fieldname": "state_name",
+   "fieldtype": "Data",
+   "label": "State Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "effective_end_date",
+   "fieldtype": "Data",
+   "label": "Effective End Date"
+  },
+  {
+   "fieldname": "modified_at",
+   "fieldtype": "Data",
+   "label": "Modified At"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Data",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "system_state_name",
+   "fieldtype": "Data",
+   "label": "System State Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-10-11 00:52:07.350093",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Kinara State",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -8,3 +8,4 @@ kinara_lms.patches.v15_0.create_custom_field_for_customer_urn
 kinara_lms.patches.v15_0.create_default_bank_account_types
 kinara_lms.patches.v15_0.create_custom_field_for_loan_partner_processing_fee_billing
 kinara_lms.patches.v15_0.create_custom_field_for_tax_inclusive
+kinara_lms.patches.v15_0.create_kinara_default_states
