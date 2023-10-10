@@ -17,7 +17,11 @@ def create_charge(args):
 		"gst_hsn_code": args.gst_hsn_code,
 		"tax_inclusive": args.tax_inclusive,
 		"item_defaults": [{
-			"income_account": args.income_gl
+			"income_account": args.income_gl,
+			"default_receivable_account": args.receivable_gl,
+			"default_waiver_account": args.waiver_gl,
+			"default_write_off_account": args.write_off_gl,
+			"default_suspense_account": args.suspense_gl,
 		}],
 		"item_group": "Charges",
 		"is_stock_item": 0,
