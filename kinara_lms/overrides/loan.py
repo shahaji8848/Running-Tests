@@ -1,14 +1,14 @@
 import frappe
 
 def created_loan_related_docs(doc, method=None):
-	for d in doc.get("entities"):
+	for d in doc.get("entities") or []:
 		frappe.get_doc({
 			"doctype": "Loan Entity Mapping",
 			"loan": doc.name,
 			"entity": d.get("entity")
 		}).insert()
 	
-	for d in doc.get("loan_documents"):
+	for d in doc.get("loan_documents") or []:
 		frappe.get_doc({
 			"doctype": "Loan Documents",
 			"loan": doc.name,
