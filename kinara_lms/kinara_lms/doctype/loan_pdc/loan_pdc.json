@@ -16,6 +16,7 @@
   "branch_name",
   "column_break_hz2h",
   "emi",
+  "emi_number",
   "cheque_number",
   "amount",
   "status",
@@ -102,11 +103,16 @@
    "fieldname": "ifsc_code",
    "fieldtype": "Data",
    "label": "IFSC Code"
+  },
+  {
+   "fieldname": "emi_number",
+   "fieldtype": "Int",
+   "label": "EMI Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-12 16:11:20.113782",
+ "modified": "2023-12-22 10:51:43.406257",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Loan PDC",
