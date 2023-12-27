@@ -63,7 +63,8 @@
   {
    "fieldname": "printed_date",
    "fieldtype": "Datetime",
-   "label": "Printed Date "
+   "label": "Printed Date ",
+   "read_only": 1
   },
   {
    "fieldname": "verified_by",
@@ -85,7 +86,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-27 17:47:39.478391",
+ "modified": "2023-12-27 18:51:07.824664",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Preclosure-Foreclosure Report",

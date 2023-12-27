@@ -4,6 +4,8 @@
 import frappe
 from frappe.model.document import Document
 from lending.loan_management.doctype.loan_repayment.loan_repayment import calculate_amounts
+from datetime import datetime
+
 
 class PreclosureForeclosureReport(Document):
 	def before_save(self):
@@ -18,6 +20,8 @@ class PreclosureForeclosureReport(Document):
 			self.client_address = address
 
 		self.client_name = customer['customer_name']
+		self.printed_date = datetime.now()
+		self.working_date = datetime.now().date()
 
 
 		set_childTbale_data(self)
