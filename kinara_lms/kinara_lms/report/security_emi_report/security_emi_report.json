@@ -1,0 +1,30 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-12-26 11:14:35.177298",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "",
+ "letterhead": null,
+ "modified": "2023-12-26 17:23:11.108443",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Security EMI Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Loan",
+ "report_name": "Security EMI Report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "HR Manager"
+  }
+ ]
+}

@@ -59,8 +59,8 @@ def get_outstanding_principal(**kwargs):
 @frappe.whitelist()
 def get_loan_ach_not_active(**kwargs):
     loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
-                                    FROM tabLoan ACH as loan_ach
-                                    JOIN tabLoan as loan
+                                    FROM `tabLoan ACH` as loan_ach
+                                    JOIN `tabLoan` as loan
                                         ON loan.name = loan_ach.loan
                                     WHERE loan_ach.ach_start_date > loan.repayment_start_date
                                         OR loan_ach.ach_end_date < DATE_ADD(loan.repayment_start_date, INTERVAL loan.repayment_periods MONTH)
@@ -71,13 +71,13 @@ def get_loan_ach_not_active(**kwargs):
 @frappe.whitelist()
 def get_loan_pdc_not_active(**kwargs):
     loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
-                                    FROM tabLoan PDC as loan_pdc
-                                    JOIN tabLoan as loan
+                                    FROM `tabLoan PDC` as loan_pdc
+                                    JOIN `tabLoan` as loan
                                         ON loan_pdc.loan = loan.name
-                                    JOIN tabLoan Repayment Schedule as loan_repayment_schedule
+                                    JOIN `tabLoan Repayment Schedule` as loan_repayment_schedule
                                         ON loan_repayment_schedule.loan = loan.name
                                         AND loan_repayment_schedule.name = loan_pdc.loan_repayment_schedule
-                                    JOIN tabRepayment Schedule as repayment_schedule
+                                    JOIN `tabRepayment Schedule` as repayment_schedule
                                         ON repayment_schedule.parent = loan_repayment_schedule.name
                                         AND repayment_schedule.name = loan_pdc.emi
                                     WHERE loan_pdc.status != "Active"
@@ -88,19 +88,27 @@ def get_loan_pdc_not_active(**kwargs):
 @frappe.whitelist()
 def get_loan_partial_pdc(**kwargs):
     loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
-                                    FROM tabLoan AS loan
-                                    JOIN tabLoan Repayment Schedule AS loan_repayment_schedule
+                                    FROM `tabLoan` AS loan
+                                    JOIN `tabLoan Repayment Schedule` AS loan_repayment_schedule
                                         ON loan_repayment_schedule.loan = loan.name
-                                    JOIN tabRepayment Schedule AS repayment_schedule
+                                    JOIN `tabRepayment Schedule` AS repayment_schedule
                                         ON repayment_schedule.parent = loan_repayment_schedule.name
-                                    JOIN tabLoan PDC AS loan_pdc
+                                    JOIN `tabLoan PDC` AS loan_pdc
                                         ON loan_pdc.loan = loan.name
                                         AND loan_pdc.loan_repayment_schedule = loan_repayment_schedule.name
-                                    WHERE NOT EXISTS (
-                                        SELECT 1
-                                        FROM tabLoan PDC AS lp
+                                    WHERE NOT EXISTS (SELECT 1
+                                        FROM `tabLoan PDC` AS lp
                                         WHERE lp.name = loan_pdc.name
-                                            AND lp.emi = repayment_schedule.name
+                                        	AND lp.emi = repayment_schedule.name)
                                         """)
     flattened_loan_list = [item for sublist in loan_list for item in sublist]
     return flattened_loan_list
+
+@frappe.whitelist()
+def get_mandate_details_ach_not_active(**kwargs):
+	loan_list = get_loan_ach_not_active()
+	loans = ', '.join([f"'{loan}'" for loan in loan_list])
+	loan_details = frappe.db.sql(f"""SELECT *
+							  		FROM `tabLoan`
+							  		WHERE name IN ({loans})""", as_dict=True)
+	return loan_details
