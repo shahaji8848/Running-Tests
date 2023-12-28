@@ -1,0 +1,41 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-27 11:34:28.612038",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_uxg2",
+  "component",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_uxg2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "component",
+   "fieldtype": "Data",
+   "label": "Component"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-12-27 11:35:02.050857",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Preclosure-Foreclosure Report Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

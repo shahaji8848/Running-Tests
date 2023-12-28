@@ -1,0 +1,112 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{loan_account_number}-{proposed_closure_date}",
+ "creation": "2023-12-27 11:29:25.107668",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_32tj",
+  "hub",
+  "client_id",
+  "loan_account_number",
+  "client_name",
+  "client_address",
+  "proposed_closure_date",
+  "preclosure_foreclosure_table",
+  "printed_by",
+  "printed_date",
+  "verified_by",
+  "working_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_32tj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hub",
+   "fieldtype": "Data",
+   "label": "Hub"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name"
+  },
+  {
+   "fieldname": "client_address",
+   "fieldtype": "Data",
+   "label": "Client Address"
+  },
+  {
+   "fieldname": "proposed_closure_date",
+   "fieldtype": "Date",
+   "label": "Proposed Closure Date"
+  },
+  {
+   "fieldname": "preclosure_foreclosure_table",
+   "fieldtype": "Table",
+   "label": "Preclosure Foreclosure Table",
+   "options": "Preclosure-Foreclosure Report Table"
+  },
+  {
+   "fieldname": "printed_by",
+   "fieldtype": "Data",
+   "label": "Printed By"
+  },
+  {
+   "fieldname": "printed_date",
+   "fieldtype": "Datetime",
+   "label": "Printed Date ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "verified_by",
+   "fieldtype": "Data",
+   "label": "Verified By"
+  },
+  {
+   "fieldname": "working_date",
+   "fieldtype": "Date",
+   "label": "Working Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "loan_account_number",
+   "fieldtype": "Link",
+   "label": "Loan Account Number",
+   "options": "Loan"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-27 18:51:07.824664",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Preclosure-Foreclosure Report",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
