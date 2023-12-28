@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class DistanceFromBranchOffice(Document):
+class PreclosureForeclosureReportTable(Document):
 	pass

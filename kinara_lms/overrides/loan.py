@@ -27,6 +27,9 @@ def created_loan_related_docs(doc, method=None):
 		insurance_doc.insurance_premium = d.get("insurance_premium")
 		insurance_doc.insured_amount = d.get("insured_amount")
 		insurance_doc.nominee_urn = d.get("nominee_urn")
+		insurance_doc.nominee_name = d.get("nominee_name")
+		insurance_doc.relationship = d.get("relationship")
+		insurance_doc.date_of_birth = d.get("date_of_birth")
 		insurance_doc.start_date = d.get("start_date")
 		insurance_doc.end_date = d.get("end_date")
 		insurance_doc.save()
@@ -84,6 +87,11 @@ def validate_customer_type(doc, method=None):
 	for co_applicant in doc.custom_co_applicants:
 		if frappe.db.get_value('Customer', co_applicant.co_applicant, 'customer_type') != "Individual":
 			frappe.throw(f"Co Applicant Type Should Be Individual: {co_applicant.co_applicant}")
+        
+		if hasattr(doc,'insurance_details'):
+			for insurance_details in doc.insurance_details:
+				if insurance_details.get('insurer_urn') not in [co_applicant.co_applicant,doc.custom_individual_applicant]:
+					frappe.throw("Same should be Applicant/Co-applicant URN's and Insurer urn")
 
 	for guarantor in doc.custom_guarantors:
 		if frappe.db.get_value('Customer', guarantor.guarantors, 'customer_type') != "Individual":

@@ -9,15 +9,9 @@
   "type_id",
   "value",
   "category_type",
-  "check"
+  "disabled"
  ],
  "fields": [
-  {
-   "default": "0",
-   "fieldname": "check",
-   "fieldtype": "Check",
-   "label": "Disabled"
-  },
   {
    "fieldname": "type_id",
    "fieldtype": "Data",
@@ -34,11 +28,17 @@
    "fieldtype": "Select",
    "label": "Category Type",
    "options": "\nIndividual\nBusiness\nAccount"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-30 12:57:44.239846",
+ "modified": "2023-12-13 12:01:51.477108",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Premises Location",

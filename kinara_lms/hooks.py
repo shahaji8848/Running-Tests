@@ -33,6 +33,7 @@ doctype_js = {
 	"Loan": "public/js/lending/loan.js",
 	"Company":  "public/js/erpnext/company.js",
 	"Loan Disbursement":  "public/js/erpnext/loan_disbursement.js",
+	"Address":  "public/js/erpnext/address.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -127,6 +128,7 @@ doc_events = {
 		"validate": "kinara_lms.overrides.loan_product.validate_loan_product_code",
 	},
 	"Address": {
+		"before_validate": "kinara_lms.overrides.address.before_validate",
 		"validate": "kinara_lms.overrides.address.kinara_address_validate",
 	},
 	"Contact": {
@@ -242,12 +244,6 @@ fixtures = [
 	{"dt": "Custom Field", "filters": [
 		[
 			"name", "in", [
-				"Loan-custom_individual_applicant",
-				"Loan-custom_guarantors",
-				"Loan-custom_co_applicants",
-				"Loan-custom_channel_partner",
-				"Loan-custom_colending_partner",
-				"Loan-custom_buyer",
 				"Sales Invoice-custom_loan_details",
 				"Sales Invoice-custom_applicant_name",
 				"Sales Invoice-custom_applicant_mobile_no",
@@ -288,7 +284,6 @@ fixtures = [
 				"Bank-custom_disabled",
 				"Loan Security Type-custom_collateral_type_id",
 				"Loan Security Type-custom_collateral_type",
-				"Loan Product-custom_moratorium_types_allowed",
 				"Loan Product-custom_base_rate",
 				"Loan Product-custom_write_off__knockoff_sequence",
 				"Loan Product-custom_npa_knockoff_sequence",
@@ -333,7 +328,6 @@ fixtures = [
 				"Loan Partner-custom_bank_name_collections",
 				"Loan Partner-custom_bank_account_number_collections",
 				"Company-custom_default_disbursement_account",
-				"Address-custom_geo_type_id",
 				"Company-custom_gst_regime",
 				"Sales Invoice Item-custom_loan_partner_amount",
 				"Sales Invoice Item-custom_company_amount",
@@ -374,9 +368,6 @@ fixtures = [
 				"Loan Product-penalty_interest_method-reqd",
 				"Loan Adjustment-is_foreclosure-hidden",
 				"Loan Partner-main-field_order",
-				"Loan-main-field_order",
-				"Loan-loan_partner-hidden",
-				"Address-main-field_order",
 				"Sales Invoice-main-field_order",
 				"Company-main-field_order",
 				"Loan Adjustment-main-field_order",

@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestColendingPartner(FrappeTestCase):
+class TestBankAccountPurpose(FrappeTestCase):
 	pass

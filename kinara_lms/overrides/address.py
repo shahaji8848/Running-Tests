@@ -27,3 +27,12 @@ def kinara_address_validate(doc, method=None):
 		return
 
 	update_docs_with_previous_gstin(doc.gstin, doc.gst_category, json.dumps(docs_with_previous_gstin))
+
+
+def before_validate(doc,method=None):
+	set_state(doc)
+
+def set_state(doc):
+	if doc.geo_type_id:
+		state = frappe.db.get_value('Geo', doc.geo_type_id, 'state')
+		doc.state = state

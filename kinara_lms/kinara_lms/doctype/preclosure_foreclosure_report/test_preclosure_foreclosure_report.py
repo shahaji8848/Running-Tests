@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestDistanceFromBranchOffice(FrappeTestCase):
+class TestPreclosureForeclosureReport(FrappeTestCase):
 	pass
