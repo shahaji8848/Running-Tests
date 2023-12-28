@@ -6,7 +6,7 @@ import frappe
 import datetime
 from frappe.model.document import Document
 
-class Billofsupply(Document):
+class BillofSupply(Document):
     def before_save(self):
         loan_id = self.loan_id
         loan_doc = frappe.get_doc("Loan", loan_id)
