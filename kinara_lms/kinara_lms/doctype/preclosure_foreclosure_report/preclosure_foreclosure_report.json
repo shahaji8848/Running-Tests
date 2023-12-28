@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{loan_account_number}-{proposed_closure_date}",
+ "autoname": "format:{loan_account_number}-{proposed_closure_date}-{#####}",
  "creation": "2023-12-27 11:29:25.107668",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -13,6 +13,7 @@
   "client_name",
   "client_address",
   "proposed_closure_date",
+  "payment_type",
   "preclosure_foreclosure_table",
   "printed_by",
   "printed_date",
@@ -41,8 +42,9 @@
   },
   {
    "fieldname": "client_address",
-   "fieldtype": "Data",
-   "label": "Client Address"
+   "fieldtype": "Link",
+   "label": "Client Address",
+   "options": "Address"
   },
   {
    "fieldname": "proposed_closure_date",
@@ -82,11 +84,18 @@
    "fieldtype": "Link",
    "label": "Loan Account Number",
    "options": "Loan"
+  },
+  {
+   "default": "Loan Closure",
+   "fieldname": "payment_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Payment Type"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-27 18:51:07.824664",
+ "modified": "2023-12-28 12:39:59.074882",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Preclosure-Foreclosure Report",

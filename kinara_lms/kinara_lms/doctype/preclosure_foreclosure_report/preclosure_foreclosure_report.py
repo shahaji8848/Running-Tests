@@ -14,20 +14,20 @@ class PreclosureForeclosureReport(Document):
 		self.client_id = loan_id.get("applicant","")
 		self.hub = loan_id.get("branch","")
 
-		customer = frappe.get_value("Customer", filters={"name":loan_id['applicant']}, fieldname=["customer_name","primary_address"],as_dict=True)
-		address = customer.primary_address
+		customer = frappe.get_value("Customer", filters={"name":loan_id['applicant']}, fieldname=["customer_name","customer_primary_address"],as_dict=True)
+		address = customer.customer_primary_address
 		if address:
 			self.client_address = address
 
 		self.client_name = customer['customer_name']
 		self.printed_date = datetime.now()
+		self.printed_by = frappe.session.user
 		self.working_date = datetime.now().date()
-
-
+		self.set('preclosure_foreclosure_table', [])
 		set_childTbale_data(self)
 
 def set_childTbale_data(self):
-		childTable_data = calculate_amounts(self.loan_account_number,self.proposed_closure_date)
+		childTable_data = calculate_amounts(self.loan_account_number, self.proposed_closure_date, self.payment_type)
 		
 		totalPrincipalDue = childTable_data.get("payable_principal_amount",0)
 		totalFuturePrincipal = childTable_data.get("total_future_principal",0)
