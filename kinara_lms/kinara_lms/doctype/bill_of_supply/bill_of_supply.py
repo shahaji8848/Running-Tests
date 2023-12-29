@@ -11,7 +11,7 @@ class BillofSupply(Document):
         loan_id = self.loan_id
         loan_doc = frappe.get_doc("Loan", loan_id)
         customer_urn = loan_doc.applicant
-        company_name = loan_doc.buyer
+        company_name = loan_doc.company
         self.loan_amount = loan_doc.loan_amount
         loan_installment_date = self.loan_installment_date
 
@@ -24,8 +24,8 @@ class BillofSupply(Document):
         """.format(company_name))
         if company_address_query:
             
-            self.company_state_code = company_address_query[0][7]
-            self.place_of_supply = company_address_query[0][2] + ", " + company_address_query[0][3]
+            self.company_state_code = company_address_query[0][7] or ""
+            self.place_of_supply = company_address_query[0][2] or "" + ", " + company_address_query[0][3] or ""
             self.posting_date = datetime.datetime.now().date()
         
         customer_address_query = frappe.db.sql("""
@@ -36,8 +36,8 @@ class BillofSupply(Document):
             LIMIT 1;
         """.format(customer_urn))
         if customer_address_query:
-            self.customer_gstin = customer_address_query[0][6]
-            self.customer_address = customer_address_query[0][0] + ", " + customer_address_query[0][1] + ", " + customer_address_query[0][2] + ", " + customer_address_query[0][3] + ", " + customer_address_query[0][4] + ", " + customer_address_query[0][5]
+            self.customer_gstin = customer_address_query[0][6] or ""
+            self.customer_address = customer_address_query[0][0] or "" + ", " + customer_address_query[0][1] or "" + ", " + customer_address_query[0][2] or "" + ", " + customer_address_query[0][3] or "" + ", " + customer_address_query[0][4] or "" + ", " + customer_address_query[0][5] or ""
         
         sales_invoice_query = frappe.db.sql("""
             SELECT si.custom_applicant_name, si.customer_name, si.name, si.company_gstin
