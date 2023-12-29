@@ -67,7 +67,7 @@ class BillofSupply(Document):
         if not principal_amount_query[0][2]:
             where_clause = f"""WHERE si.loan = "{loan_id}" AND si.customer = "{customer_urn}" """
         else:
-            where_clause = f"""WHERE si.name "{principal_amount_query[0][2]}" """
+            where_clause = f"""WHERE si.name = "{principal_amount_query[0][2]}" """
         sales_invoice_query = frappe.db.sql(f"""
             SELECT si.custom_applicant_name, si.customer_name, si.name, si.company_gstin
             FROM `tabSales Invoice` AS si
