@@ -77,29 +77,3 @@ class BillofSupply(Document):
         if customer_address_query:
             self.customer_gstin = sales_invoice_query[0][5] or ""
             self.customer_address = (customer_address_query[0][0] or "") + ", " + (customer_address_query[0][1] or "") + ", " + (customer_address_query[0][2] or "") + ", " + (customer_address_query[0][3] or "") + ", " + (customer_address_query[0][4] or "") + ", " + (customer_address_query[0][5] or "")
-        
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
