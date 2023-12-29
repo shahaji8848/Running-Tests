@@ -14,11 +14,12 @@
   "client_name",
   "client_address",
   "payment_type",
-  "preclosure_foreclosure_table",
   "printed_by",
-  "printed_date",
   "verified_by",
-  "working_date"
+  "printed_date",
+  "working_date",
+  "column_break_pkal",
+  "preclosure_foreclosure_table"
  ],
  "fields": [
   {
@@ -95,11 +96,15 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Payment Type"
+  },
+  {
+   "fieldname": "column_break_pkal",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-29 10:33:59.841575",
+ "modified": "2023-12-29 17:04:42.260051",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Preclosure-Foreclosure Report",
