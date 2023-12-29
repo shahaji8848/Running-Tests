@@ -65,7 +65,7 @@ class BillofSupply(Document):
         """.format(sales_invoice_query[0][6]))
         if company_address_query:     
             self.company_state_code = company_address_query[0][7] or ""
-            self.place_of_supply = company_address_query[0][2] or "" + ", " + company_address_query[0][3] or ""
+            self.place_of_supply = (company_address_query[0][2] or "") + ", " + (company_address_query[0][3] or "")
             self.posting_date = datetime.datetime.now().date()
         
         customer_address_query = frappe.db.sql("""
@@ -76,7 +76,7 @@ class BillofSupply(Document):
         """.format(sales_invoice_query[0][4]))
         if customer_address_query:
             self.customer_gstin = sales_invoice_query[0][5] or ""
-            self.customer_address = customer_address_query[0][0] or "" + ", " + customer_address_query[0][1] or "" + ", " + customer_address_query[0][2] or "" + ", " + customer_address_query[0][3] or "" + ", " + customer_address_query[0][4] or "" + ", " + customer_address_query[0][5] or ""
+            self.customer_address = (customer_address_query[0][0] or "") + ", " + (customer_address_query[0][1] or "") + ", " + (customer_address_query[0][2] or "") + ", " + (customer_address_query[0][3] or "") + ", " + (customer_address_query[0][4] or "") + ", " + (customer_address_query[0][5] or "")
         
 
 
