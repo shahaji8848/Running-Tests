@@ -40,16 +40,30 @@ class BillofSupply(Document):
 
         if principal_amount_query and interest_amount_query:
             self.total_amount = self.principal_amount + self.interest_amount
+        
+        if not principal_amount_query[0][2]:
+            where_clause = f"""WHERE si.loan = "{loan_id}" AND si.customer = "{customer_urn}" """
+        else:
+            where_clause = f"""WHERE si.name = "{principal_amount_query[0][2]}" """
+        sales_invoice_query = frappe.db.sql(f"""
+            SELECT si.custom_applicant_name, si.customer_name, si.name, si.company_gstin, si.customer_address, si.billing_address_gstin, si.company_address
+            FROM `tabSales Invoice` AS si
+            {where_clause}
+            LIMIT 1;""")
+        
+        if sales_invoice_query:
+            self.applicant = sales_invoice_query[0][0]
+            self.customer = sales_invoice_query[0][1]
+            self.ti_number = sales_invoice_query[0][2]
+            self.company_gstin = sales_invoice_query[0][3]
 
         company_address_query = frappe.db.sql("""
             SELECT ad.address_line1, ad.address_line2, ad.city, ad.state, ad.country, ad.pincode, ad.gstin, ad.gst_state_number
             FROM `tabAddress` AS ad
-            JOIN `tabDynamic Link` AS dl ON ad.name = dl.parent
-            WHERE dl.parenttype = "Address" AND dl.link_doctype = "Company" AND dl.link_name = "{}"
+            WHERE ad.name = "{}"
             LIMIT 1;
-        """.format(company_name))
-        if company_address_query:
-            
+        """.format(sales_invoice_query[6]))
+        if company_address_query:     
             self.company_state_code = company_address_query[0][7] or ""
             self.place_of_supply = company_address_query[0][2] or "" + ", " + company_address_query[0][3] or ""
             self.posting_date = datetime.datetime.now().date()
@@ -57,28 +71,13 @@ class BillofSupply(Document):
         customer_address_query = frappe.db.sql("""
             SELECT ad.address_line1, ad.address_line2, ad.city, ad.state, ad.country, ad.pincode, ad.gstin, ad.gst_state_number
             FROM `tabAddress` AS ad
-            JOIN `tabDynamic Link` AS dl ON ad.name = dl.parent
-            WHERE dl.parenttype = "Address" AND dl.link_doctype = "Customer" AND dl.link_name = "{}"
+            WHERE ad.name = "{}"
             LIMIT 1;
-        """.format(customer_urn))
+        """.format(sales_invoice_query[4]))
         if customer_address_query:
-            self.customer_gstin = customer_address_query[0][6] or ""
+            self.customer_gstin = sales_invoice_query[5] or ""
             self.customer_address = customer_address_query[0][0] or "" + ", " + customer_address_query[0][1] or "" + ", " + customer_address_query[0][2] or "" + ", " + customer_address_query[0][3] or "" + ", " + customer_address_query[0][4] or "" + ", " + customer_address_query[0][5] or ""
-        if not principal_amount_query[0][2]:
-            where_clause = f"""WHERE si.loan = "{loan_id}" AND si.customer = "{customer_urn}" """
-        else:
-            where_clause = f"""WHERE si.name = "{principal_amount_query[0][2]}" """
-        sales_invoice_query = frappe.db.sql(f"""
-            SELECT si.custom_applicant_name, si.customer_name, si.name, si.company_gstin
-            FROM `tabSales Invoice` AS si
-            {where_clause}
-            LIMIT 1;""")
-
-        if sales_invoice_query:
-            self.applicant = sales_invoice_query[0][0]
-            self.customer = sales_invoice_query[0][1]
-            self.ti_number = sales_invoice_query[0][2]
-            self.company_gstin = sales_invoice_query[0][3]
+        
 
 
 
