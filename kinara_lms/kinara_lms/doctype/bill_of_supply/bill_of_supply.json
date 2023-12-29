@@ -7,9 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "loan_id",
-  "loan_repayment_id",
-  "loan_amount",
   "loan_installment_date",
+  "loan_amount",
   "company_gstin",
   "accounting_code_of_service",
   "company_state_code",
@@ -28,8 +27,11 @@
   {
    "fetch_from": "loan_repayment.loan",
    "fieldname": "loan_id",
-   "fieldtype": "Data",
-   "label": "Loan ID"
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Loan ID",
+   "options": "Loan",
+   "reqd": 1
   },
   {
    "fetch_from": "loan_repayment.loan_amount",
@@ -39,8 +41,10 @@
   },
   {
    "fieldname": "loan_installment_date",
-   "fieldtype": "Data",
-   "label": "Loan Installment Date"
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Loan Installment Date",
+   "reqd": 1
   },
   {
    "fieldname": "company_gstin",
@@ -108,16 +112,11 @@
    "fieldname": "total_amount",
    "fieldtype": "Data",
    "label": "Total Amount"
-  },
-  {
-   "fieldname": "loan_repayment_id",
-   "fieldtype": "Data",
-   "label": "Loan Repayment ID"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-28 13:21:45.271169",
+ "modified": "2023-12-29 10:31:12.729081",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",
