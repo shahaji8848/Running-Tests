@@ -27,7 +27,7 @@ class PreclosureForeclosureReport(Document):
 		set_childTbale_data(self)
 
 def set_childTbale_data(self):
-		childTable_data = calculate_amounts(self.loan_account_number, self.proposed_closure_date, self.payment_type)
+		childTable_data = calculate_amounts(self.loan_account_number, self.proposed_closure_date, "Loan Closure")
 		
 		totalPrincipalDue = childTable_data.get("payable_principal_amount",0)
 		totalFuturePrincipal = childTable_data.get("total_future_principal",0)
