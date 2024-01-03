@@ -3,7 +3,7 @@ import json
 
 @frappe.whitelist()
 def update_bulk_loan_ach(**kwargs):
-	allowed_fields = ["reference_1","primary_mobile_number","reference_2", "sponsor_bank_code", "utility_code", "email_id", "docstatus"]
+	allowed_fields = ["umrn_no","reference_1","primary_mobile_number","reference_2","document_link", "sponsor_bank_code", "utility_code", "email_id", "docstatus"]
 	response = {
 		"data": []
     }

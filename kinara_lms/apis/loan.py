@@ -62,9 +62,7 @@ def get_loan_ach_not_active(**kwargs):
                                     FROM `tabLoan ACH` as loan_ach
                                     JOIN `tabLoan` as loan
                                         ON loan.name = loan_ach.loan
-                                    WHERE loan_ach.ach_start_date > loan.repayment_start_date
-                                        OR loan_ach.ach_end_date < DATE_ADD(loan.repayment_start_date, INTERVAL loan.repayment_periods MONTH)
-                                        OR loan_ach.docstatus != 1""")
+                                    WHERE loan_ach.docstatus = 0""")
     flattened_loan_list = [item for sublist in loan_list for item in sublist]
     return flattened_loan_list
 
@@ -74,14 +72,7 @@ def get_loan_pdc_not_active(**kwargs):
                                     FROM `tabLoan PDC` as loan_pdc
                                     JOIN `tabLoan` as loan
                                         ON loan_pdc.loan = loan.name
-                                    JOIN `tabLoan Repayment Schedule` as loan_repayment_schedule
-                                        ON loan_repayment_schedule.loan = loan.name
-                                        AND loan_repayment_schedule.name = loan_pdc.loan_repayment_schedule
-                                    JOIN `tabRepayment Schedule` as repayment_schedule
-                                        ON repayment_schedule.parent = loan_repayment_schedule.name
-                                        AND repayment_schedule.name = loan_pdc.emi
-                                    WHERE loan_pdc.status != "Active"
-                                        AND loan_repayment_schedule.status = "Active" """)
+                                    WHERE loan_pdc.status != "Active" """)
     flattened_loan_list = [item for sublist in loan_list for item in sublist]
     return flattened_loan_list
 
@@ -111,4 +102,4 @@ def get_mandate_details_ach_not_active(**kwargs):
 	loan_details = frappe.db.sql(f"""SELECT *
 							  		FROM `tabLoan`
 							  		WHERE name IN ({loans})""", as_dict=True)
-	return loan_details
+	return "underdevelopment"
