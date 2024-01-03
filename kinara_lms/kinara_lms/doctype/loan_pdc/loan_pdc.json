@@ -14,6 +14,7 @@
   "cheque_date",
   "bank_name",
   "branch_name",
+  "document_link",
   "column_break_hz2h",
   "emi",
   "emi_number",
@@ -108,11 +109,16 @@
    "fieldname": "emi_number",
    "fieldtype": "Int",
    "label": "EMI Number"
+  },
+  {
+   "fieldname": "document_link",
+   "fieldtype": "Data",
+   "label": "Document Link"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-22 10:51:43.406257",
+ "modified": "2024-01-03 17:43:46.455088",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Loan PDC",

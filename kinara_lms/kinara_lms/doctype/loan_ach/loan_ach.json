@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "field:ach_registration_number",
  "creation": "2023-11-07 12:38:05.632941",
  "default_view": "List",
@@ -9,6 +10,7 @@
  "field_order": [
   "ach_registration_number",
   "section_break_cuw8",
+  "umrn_no",
   "loan",
   "ach_end_date",
   "frequency",
@@ -19,6 +21,7 @@
   "max_ach_amount",
   "primary_mobile_number",
   "reference_2",
+  "document_link",
   "section_break_pe8z",
   "account_holder_name",
   "bank_account_number",
@@ -171,12 +174,22 @@
    "fieldname": "thirty_year_end",
    "fieldtype": "Check",
    "label": "30 Year End"
+  },
+  {
+   "fieldname": "umrn_no",
+   "fieldtype": "Data",
+   "label": "UMRN No"
+  },
+  {
+   "fieldname": "document_link",
+   "fieldtype": "Data",
+   "label": "Document Link"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-18 18:51:31.877693",
+ "modified": "2024-01-03 17:42:27.243188",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Loan ACH",

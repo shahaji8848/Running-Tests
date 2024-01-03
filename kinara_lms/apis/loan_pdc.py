@@ -3,7 +3,7 @@ import json
 
 @frappe.whitelist()
 def update_bulk_loan_pdc(**kwargs):
-	allowed_fields = ["status"]
+	allowed_fields = ["status","document_link"]
 	response = {
 		"data": []
     }
