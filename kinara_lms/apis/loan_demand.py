@@ -19,6 +19,7 @@ def get_demand_data(**kwargs):
     elif type == "overdue":
         conditions.append(f"demand.demand_date <= '{date}' ")
         subquery_conditions.append(f"ld.demand_date <= '{date}'")
+        order_by = "ORDER BY installment_details.payment_date"
     else:
         return {"error": "invalid type value "+type}
     
@@ -58,7 +59,8 @@ def get_demand_data(**kwargs):
                                             LEFT JOIN `tabRepayment Schedule` as installment_details ON installment_details.name = demand_details.repayment_schedule_detail
                                             LEFT JOIN `tabLoan Repayment Schedule` as loan_repayment_schedule ON loan_repayment_schedule.name = installment_details.parent
                                             {where_clause}
-                                            GROUP BY loan.name""", as_dict=1)
+                                            GROUP BY loan.name
+                                            {order_by}""", as_dict=1)
     
     response = []
     for demand_detail in demands_details:
