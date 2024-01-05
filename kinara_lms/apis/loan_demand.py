@@ -13,13 +13,14 @@ def get_demand_data(**kwargs):
                         f"ld.demand_type = 'EMI'", 
                         f"ld.docstatus = 1"
                     ]
+    order_by = ""
     if type == "scheduled":
         conditions.append(f"demand.demand_date = '{date}'")
         subquery_conditions.append(f"ld.demand_date = '{date}'")
     elif type == "overdue":
         conditions.append(f"demand.demand_date <= '{date}' ")
         subquery_conditions.append(f"ld.demand_date <= '{date}'")
-        order_by = "ORDER BY installment_details.payment_date"
+        order_by = "ORDER BY installment_details.payment_date DESC"
     else:
         return {"error": "invalid type value "+type}
     
