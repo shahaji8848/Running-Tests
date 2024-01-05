@@ -58,27 +58,25 @@ def get_outstanding_principal(**kwargs):
 
 @frappe.whitelist()
 def get_loan_ach_not_active(**kwargs):
-    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
+    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name as 'loan', loan.applicant as 'business_name', loan.loan_amount as 'loan_amount', loan.custom_individual_applicant as 'applicant_name'
                                     FROM `tabLoan ACH` as loan_ach
                                     JOIN `tabLoan` as loan
                                         ON loan.name = loan_ach.loan
-                                    WHERE loan_ach.docstatus = 0""")
-    flattened_loan_list = [item for sublist in loan_list for item in sublist]
-    return flattened_loan_list
+                                    WHERE loan_ach.docstatus = 0""", as_dict = True)
+    return loan_list
 
 @frappe.whitelist()
 def get_loan_pdc_not_active(**kwargs):
-    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
+    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name as 'loan', loan.applicant as 'business_name', loan.loan_amount as 'loan_amount', loan.custom_individual_applicant as 'applicant_name'
                                     FROM `tabLoan PDC` as loan_pdc
                                     JOIN `tabLoan` as loan
                                         ON loan_pdc.loan = loan.name
-                                    WHERE loan_pdc.status != "Active" """)
-    flattened_loan_list = [item for sublist in loan_list for item in sublist]
-    return flattened_loan_list
+                                    WHERE loan_pdc.status != "Active" """, as_dict = True)
+    return loan_list
 
 @frappe.whitelist()
 def get_loan_partial_pdc(**kwargs):
-    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name
+    loan_list = frappe.db.sql("""SELECT DISTINCT loan.name as 'loan', loan.applicant as 'business_name', loan.loan_amount as 'loan_amount', loan.custom_individual_applicant as 'applicant_name'
                                     FROM `tabLoan` AS loan
                                     JOIN `tabLoan Repayment Schedule` AS loan_repayment_schedule
                                         ON loan_repayment_schedule.loan = loan.name
@@ -91,9 +89,8 @@ def get_loan_partial_pdc(**kwargs):
                                         FROM `tabLoan PDC` AS lp
                                         WHERE lp.name = loan_pdc.name
                                         	AND lp.emi = repayment_schedule.name)
-                                        """)
-    flattened_loan_list = [item for sublist in loan_list for item in sublist]
-    return flattened_loan_list
+                                        """, as_dict = True)
+    return loan_list
 
 @frappe.whitelist()
 def get_mandate_details_ach_not_active(**kwargs):
