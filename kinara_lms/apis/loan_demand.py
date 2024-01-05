@@ -19,6 +19,7 @@ def get_demand_data(**kwargs):
     elif type == "overdue":
         conditions.append(f"demand.demand_date <= '{date}' ")
         subquery_conditions.append(f"ld.demand_date <= '{date}'")
+        order_by = "ORDER BY installment_details.payment_date ASC NULLS LAST"
     else:
         return {"error": "invalid type value "+type}
     
