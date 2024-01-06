@@ -11,6 +11,7 @@
   "ach_registration_number",
   "section_break_cuw8",
   "umrn_no",
+  "ach_registration_date",
   "loan",
   "ach_end_date",
   "frequency",
@@ -23,6 +24,11 @@
   "reference_2",
   "document_link",
   "section_break_pe8z",
+  "rejection_code",
+  "rejection_reason",
+  "column_break_wiqg",
+  "initial_reject_reason",
+  "section_break_8sh5",
   "account_holder_name",
   "bank_account_number",
   "bank_name",
@@ -184,12 +190,40 @@
    "fieldname": "document_link",
    "fieldtype": "Data",
    "label": "Document Link"
+  },
+  {
+   "fieldname": "ach_registration_date",
+   "fieldtype": "Date",
+   "label": "ACH Registration Date"
+  },
+  {
+   "fieldname": "section_break_8sh5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "rejection_code",
+   "fieldtype": "Data",
+   "label": "Rejection Code"
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Data",
+   "label": "Rejection Reason"
+  },
+  {
+   "fieldname": "column_break_wiqg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "initial_reject_reason",
+   "fieldtype": "Data",
+   "label": "Initial Reject Reason"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-03 17:42:27.243188",
+ "modified": "2024-01-06 20:16:04.830390",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Loan ACH",
