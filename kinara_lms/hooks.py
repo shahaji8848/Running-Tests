@@ -144,7 +144,6 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"before_save": "kinara_lms.overrides.sales_invoice.before_save",
-        "before_validate": "kinara_lms.overrides.sales_invoice.before_validate",
 	},
 	"Company":{
 		"validate": "kinara_lms.overrides.company.validate_default_disbursement_account",
@@ -244,13 +243,6 @@ fixtures = [
 	{"dt": "Custom Field", "filters": [
 		[
 			"name", "in", [
-				"Sales Invoice-custom_loan_details",
-				"Sales Invoice-custom_applicant_name",
-				"Sales Invoice-custom_applicant_mobile_no",
-				"Sales Invoice-custom_column_break_fkvbq",
-				"Sales Invoice-custom_loan_partner",
-				"Sales Invoice-custom_loan_partner_address",
-				"Sales Invoice-custom_loan_partner_gstin",
 				"Bank Account Type-custom_type_id",
 				"Bank Account Type-custom_value",
 				"Bank Account Type-custom_category_type",
@@ -329,9 +321,6 @@ fixtures = [
 				"Loan Partner-custom_bank_account_number_collections",
 				"Company-custom_default_disbursement_account",
 				"Company-custom_gst_regime",
-				"Sales Invoice Item-custom_loan_partner_amount",
-				"Sales Invoice Item-custom_company_amount",
-				"Sales Invoice Item-custom_ratio_percentage",
 			]
 		]
 	]},
@@ -339,7 +328,6 @@ fixtures = [
 		[
 			"name", "in", [
 				"Customer-customer_type-options",
-				"Sales Invoice-main-field_order",
 				"Bank Account Type-main-naming_rule",
 				"Bank Account Type-main-autoname",
 				"Bank Account Type-main-field_order",
@@ -368,10 +356,8 @@ fixtures = [
 				"Loan Product-penalty_interest_method-reqd",
 				"Loan Adjustment-is_foreclosure-hidden",
 				"Loan Partner-main-field_order",
-				"Sales Invoice-main-field_order",
 				"Company-main-field_order",
 				"Loan Adjustment-main-field_order",
-				"Sales Invoice Item-main-field_order",
 			]
 		]
 	]}
