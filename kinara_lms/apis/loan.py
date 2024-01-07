@@ -51,6 +51,7 @@ def get_outstanding_principal(**kwargs):
 											FROM `tabLoan` as loan
 											{join_clause}
 											{where_clause}
+											AND loan.status IN ('Active', 'Disbursed', 'Partially Disbursed')
 											GROUP BY {group_by}
 											""", as_dict = True)
 	return outstanding_principal
