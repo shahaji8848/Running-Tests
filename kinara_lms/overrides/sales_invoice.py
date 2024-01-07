@@ -1,25 +1,26 @@
 import frappe
 from frappe.utils.data import flt
+
 def before_save(doc,method=None):
     if doc.loan:
-        applicant = frappe.db.get_value('Loan',doc.loan,'custom_individual_applicant')
-        if applicant:
-            applicant_name, mobile_no = frappe.db.get_value('Customer', applicant, ['customer_name', 'mobile_no'])        
-            if applicant_name:
-                doc.custom_applicant_name = applicant_name
-            if mobile_no:
-                doc.custom_applicant_mobile_no = mobile_no
-
-def before_validate(doc,method=None):
-    if doc.loan_partner:
-        set_loan_partner_address(doc)
-    else:
-        doc.loan_partner_address = None             
-        doc.loan_partner_gstin = None
-    set_company_billing_address(doc)
-    set_company_amount_and_loan_partner_amount_values(doc)
+        set_individual_applicant_name_and_mobile_no(doc)
+        if doc.loan_partner:
+            set_loan_partner_address(doc)
+        else:
+            doc.loan_partner_address = None             
+            doc.loan_partner_gstin = None
+        set_company_billing_address(doc)
+        set_company_amount_and_loan_partner_amount_values(doc)
+        
     
-
+def set_individual_applicant_name_and_mobile_no(doc):
+    applicant = frappe.db.get_value('Loan',doc.loan,'custom_individual_applicant')
+    if applicant:
+        applicant_name, mobile_no = frappe.db.get_value('Customer', applicant, ['customer_name', 'mobile_no'])        
+        if applicant_name:
+            doc.custom_applicant_name = applicant_name
+        if mobile_no:
+            doc.custom_applicant_mobile_no = mobile_no
 
 def set_company_billing_address(doc):
     company_gst_regime = frappe.db.get_value('Company', doc.company, 'gst_regime')
