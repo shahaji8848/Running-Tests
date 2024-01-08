@@ -32,16 +32,20 @@ def update_bulk_loan_ach(**kwargs):
 
 @frappe.whitelist()
 def get_mandate_details_ach_not_active(**kwargs):
-    
 	conditions = []
+	condition_available = False
+	where_clause = ""
 	if "applicant_name" in kwargs and kwargs["applicant_name"] != "":
 		conditions.append(f"""individual_applicant.customer_name = '{kwargs["applicant_name"]}'""")
+		condition_available = True
 	if "business_name" in kwargs and kwargs["business_name"] != "":
 		conditions.append(f"""entity.customer_name = '{kwargs["business_name"]}'""")
+		condition_available = True
 	if "ach_registration_number" in kwargs and kwargs["ach_registration_number"] != "":
 		conditions.append(f"""ach.ach_registration_number = '{kwargs["ach_registration_number"]}'""")
-		
-	where_clause = "WHERE " + " AND ".join(conditions)
+		condition_available = True
+	if condition_available:
+		where_clause = "WHERE " + " AND ".join(conditions)
 	ach_details  = frappe.db.sql(f"""SELECT COALESCE(NULLIF(co_lending_partner.partner_name,''), NULLIF(loan_channel_partner.name1,''), loan.company) as "partner_name",
 									ach.ach_registration_date as "Mandate Date",
 									ach.sponsor_bank_code as "Sponsor Bank Code",
