@@ -12,3 +12,10 @@ class LoanACH(Document):
 				self.ach_end_date = frappe.utils.data.add_years(self.ach_start_date, 30)
 			else:
 				frappe.throw("Invalid ACH Start Date")
+	
+	def before_save(self):
+		umrn_no = frappe.db.get_value('Loan ACH', self.name, 'umrn_no')
+		if self.umrn_no != umrn_no:
+			self.processed_on_with_umrn = frappe.utils.nowdate()
+		if not self.umrn_no:
+			self.processed_on_with_umrn = None

@@ -1,4 +1,5 @@
 import frappe
+import json
 
 
 @frappe.whitelist()
@@ -133,4 +134,33 @@ def get_demand_data(**kwargs):
                 response_doc["Realization Reason"] = latest_realization[0]["Realization Reason"]
                 response_doc["Realization Date"] = latest_realization[0]["Realization Date"]
         response.append(response_doc)
+    return response
+
+@frappe.whitelist()
+def update_bulk_loan_demand(**kwargs):
+    allowed_fields = ["realization_status","realization_reason","realization_date"]
+    response = {
+		"data": []
+    }
+    body = json.loads(frappe.request.data)
+    for data in body["data"]:
+        response_dict = {
+			"status" : "",
+		}
+        try:
+            if "name" not in data:
+                frappe.throw("Record Name Is Mandatory")
+            doc = frappe.get_doc("Loan Demand",data["name"])
+            for key in data.keys():
+                if key in allowed_fields:
+                    doc.set(key, data[key])
+            doc.save()
+            response_dict["name"] = doc.name
+            response_dict["status"] = "success"
+            response_dict["message"] = "record updated"
+            response_dict["doc"] = doc
+        except Exception as e:
+            response_dict["status"] = "error"
+            response_dict["message"] = e
+        response["data"].append(response_dict)
     return response

@@ -1,5 +1,6 @@
 import frappe
 from datetime import datetime
+import json
 
 @frappe.whitelist()
 def get_loan_list(hub=None,loan_account_number=None,customer_urn=None,customer_name=None):
@@ -106,10 +107,30 @@ def get_loan_partial_pdc(**kwargs):
     return loan_list
 
 @frappe.whitelist()
-def get_mandate_details_ach_not_active(**kwargs):
-	loan_list = get_loan_ach_not_active()
-	loans = ', '.join([f"'{loan}'" for loan in loan_list])
-	loan_details = frappe.db.sql(f"""SELECT *
-							  		FROM `tabLoan`
-							  		WHERE name IN ({loans})""", as_dict=True)
-	return "underdevelopment"
+def update_bulk_loan(**kwargs):
+	allowed_fields = ["sponsor_bank_code","bank_name"]
+	response = {
+		"data": []
+    }
+	body = json.loads(frappe.request.data)
+	for data in body["data"]:
+		response_dict = {
+			"status" : "",
+		}
+		try:
+			if "name" not in data:
+				frappe.throw("Record Name Is Mandatory")
+			doc = frappe.get_doc("Loan",data["name"])
+			for key in data.keys():
+				if key in allowed_fields:
+					doc.set(key, data[key])
+			doc.save()
+			response_dict["name"] = doc.name
+			response_dict["status"] = "success"
+			response_dict["message"] = "record updated"
+			response_dict["doc"] = doc
+		except Exception as e:
+			response_dict["status"] = "error"
+			response_dict["message"] = e
+		response["data"].append(response_dict)
+	return response
