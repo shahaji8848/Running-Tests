@@ -107,7 +107,7 @@ def get_mandate_details_ach_not_active(**kwargs):
             "Account Holder Name": ach["Account Holder Name"],
             "Customer Additional Information": None,
             "Telephone No": None,
-            "Mobile Number": ach["Mobile Number"],
+            "Mobile Number": ach["Mobile No"],
             "E Mail ID": ach["E Mail ID"],
             "Category Code": None,
 			"UMRN No" : ach["UMRN No"],
