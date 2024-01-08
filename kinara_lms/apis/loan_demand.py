@@ -28,7 +28,7 @@ def get_demand_data(**kwargs):
     subquery_where_clause = "WHERE " + " AND ".join(subquery_conditions)
 
     demands_details  = frappe.db.sql(f"""
-                                        SELECT COALESCE(NULLIF(loan.co_lending_partner,''), NULLIF(loan.custom_channel_partner,''), loan.company) as "partner_name", 
+                                        SELECT COALESCE(NULLIF(co_lending_partner.partner_name,''), NULLIF(loan_channel_partner.name1,''), loan.company) as "partner_name",
                                             loan.sponsor_bank_code as "Sponsor Bank Code", 
                                             loan.hub as "Hub", 
                                             loan.name as "AccountID", 
@@ -59,6 +59,8 @@ def get_demand_data(**kwargs):
                                                                                                                     LIMIT 1)
                                             LEFT JOIN `tabRepayment Schedule` as installment_details ON installment_details.name = demand_details.repayment_schedule_detail
                                             LEFT JOIN `tabLoan Repayment Schedule` as loan_repayment_schedule ON loan_repayment_schedule.name = installment_details.parent
+                                            LEFT JOIN `tabLoan Partner` as co_lending_partner ON co_lending_partner.name = loan.co_lending_partner
+									        LEFT JOIN `tabLoan Channel Partner` as loan_channel_partner ON loan_channel_partner.name = loan.custom_channel_partner
                                             {where_clause}
                                             GROUP BY loan.name
                                             {order_by}""", as_dict=1)
