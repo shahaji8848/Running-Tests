@@ -87,6 +87,12 @@ def get_mandate_details_ach_not_active(**kwargs):
     
 	response = []
 	for ach in ach_details:
+		if ach["Mandate Status"] == 0:
+			ach["Mandate Status"] = "PENDING"
+		if ach["Mandate Status"] == 1:
+			ach["Mandate Status"] = "APPROVED"
+		if ach["Mandate Status"] == 2:
+			ach["Mandate Status"] = "CANCELLED"
 		response_doc = {
             "partner_name" : ach["partner_name"],
             "Mandate Date": ach["Mandate Date"],
