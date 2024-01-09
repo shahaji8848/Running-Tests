@@ -33,5 +33,5 @@ def generate_bill_of_supply(doc, method=None):
             if doc.demand_type == "Charges":
                 charges = doc.demand_amount - doc.paid_amount
                 bs_doc.append('items',{'particulars':"Charges Amount",'amount':charges})
-        bs_doc.save()
-        bs_doc.submit()
+            bs_doc.save()
+            bs_doc.submit()
