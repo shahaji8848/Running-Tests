@@ -36,8 +36,4 @@ def generate_bill_of_supply(doc, method=None):
                 charges = doc.demand_amount - doc.paid_amount
                 bs_doc.append('items',{'particulars':"Charges Amount",'amount':charges})
             bs_doc.save()
-            with update_permission("Bill of Supply", bs_doc.name):
-                try:
-                    bs_doc.submit()
-                except Exception as e:
-                    pass
+            bs_doc.submit()
