@@ -1,6 +1,8 @@
 import frappe
 from frappe import _
 import datetime
+from frappe.utils.data import flt
+
 
 
 def after_submit(doc, method=None):
@@ -24,14 +26,14 @@ def generate_bill_of_supply(doc, method=None):
                 bs_doc.repayment_schedule_detail = doc.repayment_schedule_detail
                 try:
                     rs = frappe.get_doc('Repayment Schedule', doc.repayment_schedule_detail)
-                    principal = rs.principal_amount
-                    interest = rs.interest_amount
+                    principal = flt(rs.principal_amount)
+                    interest = flt(rs.interest_amount)
                 except:
                     principal, interest = 0,0
                 bs_doc.append('items',{'particulars':"Principal Amount",'amount':principal})
                 bs_doc.append('items',{'particulars':"Interest Amount",'amount':interest})
             if doc.demand_type == "Charges":
-                charges = doc.demand_amount - doc.paid_amount
+                charges = flt(doc.demand_amount) - flt(doc.paid_amount)
                 bs_doc.append('items',{'particulars':"Charges Amount",'amount':charges})
             bs_doc.save()
             bs_doc.submit()
