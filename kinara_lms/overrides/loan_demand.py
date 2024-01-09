@@ -1,6 +1,8 @@
 import frappe
 from frappe import _
 import datetime
+from frappe.permissions.perm_manager import update_permission
+
 
 
 def after_submit(doc, method=None):
@@ -34,4 +36,8 @@ def generate_bill_of_supply(doc, method=None):
                 charges = doc.demand_amount - doc.paid_amount
                 bs_doc.append('items',{'particulars':"Charges Amount",'amount':charges})
             bs_doc.save()
-            bs_doc.submit(ignore_permissions = True)
+            with update_permission("Bill of Supply", bs_doc.name):
+                try:
+                    bs_doc.submit()
+                except Exception as e:
+                    pass
