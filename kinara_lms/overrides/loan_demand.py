@@ -1,8 +1,6 @@
 import frappe
 from frappe import _
 import datetime
-from frappe.permissions.perm_manager import update_permission
-
 
 
 def after_submit(doc, method=None):
