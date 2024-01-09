@@ -1,28 +1,30 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:BS-{loan_id}-{loan_installment_date}-{#####}",
  "creation": "2023-12-26 10:51:17.517575",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "loan_id",
-  "loan_installment_date",
-  "loan_amount",
-  "company_gstin",
-  "accounting_code_of_service",
-  "company_state_code",
-  "place_of_supply",
   "ti_number",
-  "section_break_ftaq",
-  "posting_date",
+  "loan_id",
+  "loan_amount",
+  "loan_installment_date",
   "customer",
   "customer_address",
-  "applicant",
   "customer_gstin",
-  "principal_amount",
-  "interest_amount",
-  "total_amount"
+  "repayment_schedule_detail",
+  "section_break_ftaq",
+  "accounting_code_of_service",
+  "applicant",
+  "company_address",
+  "company_state_code",
+  "company_gstin",
+  "posting_date",
+  "place_of_supply",
+  "loan_demand_detail",
+  "section_break_ier3",
+  "items",
+  "amended_from"
  ],
  "fields": [
   {
@@ -35,9 +37,9 @@
    "reqd": 1
   },
   {
-   "fetch_from": "loan_repayment.loan_amount",
+   "fetch_from": "loan_id.loan_amount",
    "fieldname": "loan_amount",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "label": "Loan Amount"
   },
   {
@@ -48,6 +50,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "ti_number.company_gstin",
    "fieldname": "company_gstin",
    "fieldtype": "Data",
    "label": "Company GSTIN"
@@ -59,73 +62,107 @@
    "label": "Accounting code of service"
   },
   {
+   "fetch_from": "company_address.gst_state_number",
+   "fetch_if_empty": 1,
    "fieldname": "company_state_code",
    "fieldtype": "Data",
    "label": "Company State Code"
   },
   {
+   "fetch_from": "ti_number.place_of_supply",
    "fieldname": "place_of_supply",
    "fieldtype": "Data",
    "label": "Place of Supply"
   },
   {
    "fieldname": "ti_number",
-   "fieldtype": "Data",
-   "label": "TI Number"
+   "fieldtype": "Link",
+   "label": "TI Number",
+   "options": "Sales Invoice"
   },
   {
-   "fetch_from": "loan_repayment.posting_date",
+   "fetch_from": ".",
    "fieldname": "posting_date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Posting Date"
   },
   {
+   "fetch_from": "ti_number.customer_name",
    "fieldname": "customer",
    "fieldtype": "Data",
    "label": "Customer"
   },
   {
+   "fetch_from": "ti_number.customer_address",
    "fieldname": "customer_address",
-   "fieldtype": "Data",
-   "label": "Customer Address"
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address"
   },
   {
+   "fetch_from": "ti_number.custom_applicant_name",
    "fieldname": "applicant",
    "fieldtype": "Data",
    "label": "Applicant"
   },
   {
+   "fetch_from": "ti_number.billing_address_gstin",
    "fieldname": "customer_gstin",
    "fieldtype": "Data",
    "label": "Customer GSTIN"
   },
   {
-   "fieldname": "principal_amount",
-   "fieldtype": "Data",
-   "label": "Principal Amount"
-  },
-  {
-   "fieldname": "interest_amount",
-   "fieldtype": "Data",
-   "label": "Interest Amount"
-  },
-  {
-   "fieldname": "total_amount",
-   "fieldtype": "Data",
-   "label": "Total Amount"
-  },
-  {
    "fieldname": "section_break_ftaq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "ti_number.company_address",
+   "fieldname": "company_address",
+   "fieldtype": "Link",
+   "label": "Company Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "section_break_ier3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Bill of Supply Items"
+  },
+  {
+   "fieldname": "loan_demand_detail",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Loan Demand Detail",
+   "options": "Loan Demand"
+  },
+  {
+   "fieldname": "repayment_schedule_detail",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Repayment Schedule Detail",
+   "options": "Repayment Schedule"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Bill of Supply",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-12-29 17:02:05.942392",
+ "modified": "2024-01-09 17:52:36.873739",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",
- "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
