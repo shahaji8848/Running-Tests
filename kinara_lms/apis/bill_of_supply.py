@@ -12,9 +12,9 @@ def get_bill_of_supply_pdf(**kwargs):
     bs_list = frappe.db.sql(f"""SELECT bs.name as "name"
                                 FROM `tabBill of Supply` AS bs
                                 WHERE
-                                    bs.loan_id = {loan} 
-                                    AND bs.posting_date = {demand_date}
-                                    AND bs.demand_type = {demand_type}
+                                    bs.loan_id = '{loan} '
+                                    AND bs.posting_date = '{demand_date}'
+                                    AND bs.demand_type = '{demand_type}'
                                     AND bs.docstatus = 1
                                 """, as_dict = True)
     pdf = []
