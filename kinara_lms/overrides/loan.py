@@ -63,7 +63,7 @@ def created_loan_related_docs(doc, method=None):
 				"loan_security_price": frappe.db.get_value("Loan Security", d.get("collateral_id"), "original_security_value"),
 			})
 
-			loan_security_assignment.insert()
+		loan_security_assignment.insert()
 
 		loan_security_assignment.append("allocated_loans", {
 			"loan": doc.name
@@ -88,7 +88,7 @@ def validate_customer_type(doc, method=None):
 	for co_applicant in doc.custom_co_applicants:
 		if frappe.db.get_value('Customer', co_applicant.co_applicant, 'customer_type') != "Individual":
 			frappe.throw(f"Co Applicant Type Should Be Individual: {co_applicant.co_applicant}")
-        
+
 		if hasattr(doc,'insurance_details'):
 			for insurance_details in doc.insurance_details:
 				if insurance_details.get('insurer_urn') not in [co_applicant.co_applicant,doc.custom_individual_applicant]:
