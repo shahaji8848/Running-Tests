@@ -70,6 +70,7 @@ def created_loan_related_docs(doc, method=None):
 		})
 
 		loan_security_assignment.save()
+		loan_security_assignment.submit()
 
 
 def override_name(doc, method=None):
