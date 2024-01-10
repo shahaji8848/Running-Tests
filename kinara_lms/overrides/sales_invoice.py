@@ -1,7 +1,7 @@
 import frappe
 from frappe.utils.data import flt
 
-def before_save(doc,method=None):
+def on_update(doc,method=None):
     if doc.loan:
         set_individual_applicant_name_and_mobile_no(doc)
         if doc.loan_partner:
