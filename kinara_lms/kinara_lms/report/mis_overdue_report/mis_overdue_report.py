@@ -287,6 +287,7 @@ def get_data(filters):
 
 	if filters.get("hub"):
 		query_filters.update({"custom_hub_1": filters.get("hub")})
+	query_filters.update({"docstatus": 1})
 	
 	loans = frappe.get_all(
 		"Loan",
@@ -327,7 +328,7 @@ def get_data(filters):
 		loan_product = get_product_details(loan.loan_product)
 		loan_disb = get_disbursement_details(loan.loan_account_number)
 		loan_restruc = get_restructure_details(loan.loan_account_number)
-		loan_repayment = get_repayment_details(loan.loan_account_number)
+		maturity_date = get_repayment_details(loan.loan_account_number)
 		total_payment = loan.total_payment if loan.status == "Disbursed" else loan.disbursed_amount
 
 		pio = frappe.db.sql("""select outstanding_amount from `tabLoan Demand` where loan=%s and demand_type = "Penalty" and demand_subtype = "Penalty" order by creation desc limit 1""",(loan.loan_account_number),as_dict=True)
@@ -417,7 +418,7 @@ def get_data(filters):
 			"disbursement_date": loan_disb.get("disbursement_date"),
 			"emi": loan_disb.get("monthly_repayment_amount"),
 			"installment_start_date": loan.repayment_start_date,
-			"maturity_date": loan_repayment,
+			"maturity_date": maturity_date,
 			"loan_purpose": loan.loan_purpose,
 			"principal_outstanding": flt(total_payment)
 				- flt(loan.total_principal_paid)
