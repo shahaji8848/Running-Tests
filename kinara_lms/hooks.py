@@ -143,7 +143,7 @@ doc_events = {
 		"validate": "kinara_lms.overrides.loan_partner.validate_loan_partner",
 	},
 	"Sales Invoice": {
-		"before_save": "kinara_lms.overrides.sales_invoice.before_save",
+		"on_update": "kinara_lms.overrides.sales_invoice.on_update",
 	},
 	"Company":{
 		"validate": "kinara_lms.overrides.company.validate_default_disbursement_account",

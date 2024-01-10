@@ -6,10 +6,7 @@ import json
 def get_demand_data(**kwargs):
     date = kwargs["date"]
     type = kwargs["type"]
-    conditions = [
-                    f"demand.demand_type = 'EMI'", 
-                    f"demand.docstatus = 1"
-                ]
+    conditions = [f"demand.docstatus = 1"]
     subquery_conditions = [
                         f"ld.demand_type = 'EMI'", 
                         f"ld.docstatus = 1"
@@ -17,6 +14,7 @@ def get_demand_data(**kwargs):
     order_by = ""
     if type == "scheduled":
         conditions.append(f"demand.demand_date = '{date}'")
+        conditions.append(f"demand.demand_type = 'EMI'")
         subquery_conditions.append(f"ld.demand_date = '{date}'")
     elif type == "overdue":
         conditions.append(f"demand.demand_date <= '{date}' ")
@@ -37,7 +35,8 @@ def get_demand_data(**kwargs):
                                             loan_product.product_name as "ProductName",
                                             entity.customer_name as "ClientName", 
                                             applicant.customer_name as "Proprietor Name", 
-                                            loan.loan_amount as "LoanAmount", SUM(demand.demand_amount - demand.paid_amount) as "Current Due", 
+                                            loan.loan_amount as "LoanAmount", 
+                                            SUM(demand.demand_amount - demand.paid_amount) as "Current Due", 
                                             loan_repayment.repayment_mode as "Repayment Mode", 
                                             demand_details.name as "Demand Name",
                                             demand_details.realization_status as "Realization Status", 
@@ -63,7 +62,7 @@ def get_demand_data(**kwargs):
                                             LEFT JOIN `tabLoan Partner` as co_lending_partner ON co_lending_partner.name = loan.co_lending_partner
 									        LEFT JOIN `tabLoan Channel Partner` as loan_channel_partner ON loan_channel_partner.name = loan.custom_channel_partner
                                             {where_clause}
-                                            GROUP BY loan.name
+                                            GROUP BY demand.loan
                                             {order_by}""", as_dict=1)
     
     response = []
