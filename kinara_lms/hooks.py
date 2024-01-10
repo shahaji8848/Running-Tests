@@ -149,7 +149,7 @@ doc_events = {
 		"validate": "kinara_lms.overrides.company.validate_default_disbursement_account",
 	},
     "Loan Demand":{
-		"on_submit": "kinara_lms.overrides.loan_demand.after_submit",
+		"on_submit": "kinara_lms.overrides.loan_demand.on_submit",
 	},
 }
 
