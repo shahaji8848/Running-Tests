@@ -13,7 +13,10 @@ def get_last_journal_entry_for_a_loan(**kwargs):
                                     ORDER BY je.posting_date DESC, je.modified DESC
                                     LIMIT 1
 								""")
-    last_je_date = last_je[0][1]
+    if len(last_je) > 0:
+        last_je_date = last_je[0][1]
+    else:
+        return {"error": "No Journal Entry found for the Loan "+loan}
     last_restructure_for_a_loan = frappe.db.sql(f"""SELECT lr.restructure_date
                                     FROM `tabLoan Restructure` as lr
                                     WHERE lr.loan = "{loan}"
