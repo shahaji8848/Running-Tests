@@ -68,6 +68,8 @@ def get_loan_demand_data(filters):
 	subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 	order_by = ""
 	if report_type == "scheduled":	
+		if filters.from_date != filters.to_date:
+			frappe.throw("For Type: scheduled From date and To Date Must Be Same")
 		conditions.append(f"demand.demand_type = 'EMI'")
 		
 	elif report_type == "overdue":
