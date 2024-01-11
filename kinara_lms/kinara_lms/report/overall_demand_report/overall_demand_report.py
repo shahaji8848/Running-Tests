@@ -54,7 +54,7 @@ def get_loan_demand_data(filters):
 		from_date = filters.from_date
 		to_date = filters.to_date
 	else:
-		date = frappe.db.sql(f"""SELECT demand.date
+		date = frappe.db.sql(f"""SELECT demand.demand_date
 					   			FROM `tabLoan Demand` as demand
 					   			WHERE demand.demand_type = 'EMI'
 					   			ORDER BY demand.demand_date DESC
