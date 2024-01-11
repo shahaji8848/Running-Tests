@@ -60,8 +60,8 @@ def get_loan_demand_data(filters):
 					   			ORDER BY demand.demand_date DESC
 								LIMIT 1
 								""")
-		from_date = date[0]
-		to_date = date[0]
+		from_date = date[0][0]
+		to_date = date[0][0]
 
 	conditions.append(f"demand.demand_date <= '{to_date}' ")
 	conditions.append(f"demand.demand_date >= '{from_date}' ")
