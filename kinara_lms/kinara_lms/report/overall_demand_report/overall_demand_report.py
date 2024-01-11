@@ -62,17 +62,27 @@ def get_loan_demand_data(filters):
 								""")
 		from_date = date[0][0]
 		to_date = date[0][0]
+	if report_type == "Scheduled":	
+		if filters.from_date and filters.to_date:
+			if filters.from_date != filters.to_date:
+				frappe.throw("For Type: Scheduled From date and To Date Must Be Same")
+		else:
+			if filters.from_date:
+				from_date = filters.from_date
+				to_date = filters.from_date
+			if filters.to_date:
+				from_date = filters.to_date
+				to_date = filters.to_date
 
+			
 	conditions.append(f"demand.demand_date <= '{to_date}' ")
 	conditions.append(f"demand.demand_date >= '{from_date}' ")
-	subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 	order_by = ""
 	if report_type == "Scheduled":	
-		if filters.from_date != filters.to_date:
-			frappe.throw("For Type: Scheduled From date and To Date Must Be Same")
 		conditions.append(f"demand.demand_type = 'EMI'")
-		
+		subquery_conditions.append(f"ld.demand_date = '{to_date}'")
 	elif report_type == "overdue":
+		subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 		order_by = "ORDER BY installment_details.payment_date DESC"
 	
 	where_clause = "WHERE " + " AND ".join(conditions)
