@@ -13,6 +13,7 @@
   "customer_address",
   "customer_gstin",
   "repayment_schedule_detail",
+  "demand_type",
   "section_break_ftaq",
   "accounting_code_of_service",
   "applicant",
@@ -154,12 +155,17 @@
    "options": "Bill of Supply",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "demand_type",
+   "fieldtype": "Data",
+   "label": "Demand Type"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-09 21:48:51.588322",
+ "modified": "2024-01-10 13:39:00.632955",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",

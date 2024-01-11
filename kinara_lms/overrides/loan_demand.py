@@ -5,8 +5,9 @@ from frappe.utils.data import flt
 
 
 
-def after_submit(doc, method=None):
-	generate_bill_of_supply(doc)
+def on_submit(doc, method=None):
+    if doc.demand_type == "EMI" or doc.demand_type == "Charges":
+	    generate_bill_of_supply(doc)
 
 def generate_bill_of_supply(doc, method=None):
         if doc.demand_type == "EMI":
@@ -21,6 +22,7 @@ def generate_bill_of_supply(doc, method=None):
             bs_doc.loan_id = doc.loan
             bs_doc.loan_installment_date = doc.demand_date
             bs_doc.loan_demand_detail = doc.name
+            bs_doc.demand_type = doc.demand_type
             bs_doc.posting_date = datetime.datetime.now().date()
             if doc.demand_type == "EMI":
                 bs_doc.repayment_schedule_detail = doc.repayment_schedule_detail

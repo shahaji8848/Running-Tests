@@ -1,0 +1,27 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-12-28 10:06:19.475345",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "acb",
+ "letterhead": null,
+ "modified": "2023-12-28 10:06:19.475345",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Overall demand Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Loan Demand",
+ "report_name": "Overall demand Report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}
