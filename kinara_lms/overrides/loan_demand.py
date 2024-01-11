@@ -36,6 +36,6 @@ def generate_bill_of_supply(doc, method=None):
                 bs_doc.append('items',{'particulars':"Interest Amount",'amount':interest})
             if doc.demand_type == "Charges":
                 charges = flt(doc.demand_amount) - flt(doc.paid_amount)
-                bs_doc.append('items',{'particulars':"Charges Amount",'amount':charges})
+                bs_doc.append('items',{'particulars':doc.demand_subtype+" Amount",'amount':charges})
             bs_doc.save()
             bs_doc.submit()

@@ -65,12 +65,12 @@ def get_loan_demand_data(filters):
 
 	conditions.append(f"demand.demand_date <= '{to_date}' ")
 	conditions.append(f"demand.demand_date >= '{from_date}' ")
+	subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 	order_by = ""
 	if report_type == "scheduled":	
 		conditions.append(f"demand.demand_type = 'EMI'")
-		subquery_conditions.append(f"ld.demand_date = '{to_date}'")
+		
 	elif report_type == "overdue":
-		subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 		order_by = "ORDER BY installment_details.payment_date DESC"
 	
 	where_clause = "WHERE " + " AND ".join(conditions)
@@ -117,7 +117,7 @@ def get_loan_demand_data(filters):
 										LEFT JOIN `tabLoan Channel Partner` as loan_channel_partner ON loan_channel_partner.name = loan.custom_channel_partner
 										LEFT JOIN `tabBranch` as branch ON loan.hub = branch.name
 										{where_clause}
-										GROUP BY demand.loan, demand.demand_date
+										GROUP BY demand.loan
 										{order_by}""", as_dict=1)
 
 	response = []
