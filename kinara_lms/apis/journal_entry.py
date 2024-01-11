@@ -2,7 +2,7 @@ import frappe
 
 
 @frappe.whitelist()
-def last_jv_entry_for_the_loan(**kwargs):
+def get_last_journal_entry_for_a_loan(**kwargs):
     loan = kwargs["loan"]
     last_je = frappe.db.sql(f"""SELECT je.name, je.posting_date
                                     FROM `tabJournal Entry` as je
@@ -18,7 +18,7 @@ def last_jv_entry_for_the_loan(**kwargs):
                                     FROM `tabLoan Restructure` as lr
                                     WHERE lr.loan = "{loan}"
                                     AND lr.docstatus = 1
-                                    ORDER BY lr.restructure_date DESC, je.modified DESC
+                                    ORDER BY lr.restructure_date DESC, lr.modified DESC
                                     LIMIT 1
 								    """)
     last_restructure_date = last_restructure_for_a_loan[0][0]
