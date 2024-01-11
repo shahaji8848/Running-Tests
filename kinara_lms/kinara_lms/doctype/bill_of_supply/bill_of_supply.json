@@ -9,6 +9,7 @@
   "loan_id",
   "loan_amount",
   "loan_installment_date",
+  "customer_urn",
   "customer",
   "customer_address",
   "customer_gstin",
@@ -16,12 +17,13 @@
   "demand_type",
   "section_break_ftaq",
   "accounting_code_of_service",
+  "applicant_urn",
   "applicant",
   "company_address",
   "company_state_code",
   "company_gstin",
-  "posting_date",
   "place_of_supply",
+  "posting_date",
   "loan_demand_detail",
   "section_break_ier3",
   "items",
@@ -29,7 +31,7 @@
  ],
  "fields": [
   {
-   "fetch_from": "loan_repayment.loan",
+   "fetch_from": "null.",
    "fieldname": "loan_id",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -51,7 +53,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "ti_number.company_gstin",
+   "fetch_from": "ti_number.",
    "fieldname": "company_gstin",
    "fieldtype": "Data",
    "label": "Company GSTIN"
@@ -88,7 +90,7 @@
    "label": "Posting Date"
   },
   {
-   "fetch_from": "ti_number.customer_name",
+   "fetch_from": ".",
    "fieldname": "customer",
    "fieldtype": "Data",
    "label": "Customer"
@@ -101,10 +103,12 @@
    "options": "Address"
   },
   {
-   "fetch_from": "ti_number.custom_applicant_name",
+   "fetch_from": ".",
+   "fetch_if_empty": 1,
    "fieldname": "applicant",
-   "fieldtype": "Data",
-   "label": "Applicant"
+   "fieldtype": "Link",
+   "label": "Applicant",
+   "options": "Customer"
   },
   {
    "fetch_from": "ti_number.billing_address_gstin",
@@ -117,7 +121,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "ti_number.company_address",
+   "fetch_from": "ti_number.",
    "fieldname": "company_address",
    "fieldtype": "Link",
    "label": "Company Address",
@@ -160,12 +164,28 @@
    "fieldname": "demand_type",
    "fieldtype": "Data",
    "label": "Demand Type"
+  },
+  {
+   "fetch_from": "loan_id.applicant",
+   "fetch_if_empty": 1,
+   "fieldname": "customer_urn",
+   "fieldtype": "Link",
+   "label": "Customer URN",
+   "options": "Customer"
+  },
+  {
+   "fetch_from": "loan_id.custom_individual_applicant",
+   "fetch_if_empty": 1,
+   "fieldname": "applicant_urn",
+   "fieldtype": "Link",
+   "label": "Applicant URN",
+   "options": "Customer"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-10 13:39:00.632955",
+ "modified": "2024-01-11 13:50:09.312463",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",

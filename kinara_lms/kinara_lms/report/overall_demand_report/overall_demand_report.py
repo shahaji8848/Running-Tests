@@ -60,13 +60,25 @@ def get_loan_demand_data(filters):
 					   			ORDER BY demand.demand_date DESC
 								LIMIT 1
 								""")
-		from_date = date[0]
-		to_date = date[0]
+		from_date = date[0][0]
+		to_date = date[0][0]
+	if report_type == "Scheduled":	
+		if filters.from_date and filters.to_date:
+			if filters.from_date != filters.to_date:
+				frappe.throw("For Type: Scheduled From date and To Date Must Be Same")
+		else:
+			if filters.from_date:
+				from_date = filters.from_date
+				to_date = filters.from_date
+			if filters.to_date:
+				from_date = filters.to_date
+				to_date = filters.to_date
 
+			
 	conditions.append(f"demand.demand_date <= '{to_date}' ")
 	conditions.append(f"demand.demand_date >= '{from_date}' ")
 	order_by = ""
-	if report_type == "scheduled":	
+	if report_type == "Scheduled":	
 		conditions.append(f"demand.demand_type = 'EMI'")
 		subquery_conditions.append(f"ld.demand_date = '{to_date}'")
 	elif report_type == "overdue":
@@ -117,7 +129,7 @@ def get_loan_demand_data(filters):
 										LEFT JOIN `tabLoan Channel Partner` as loan_channel_partner ON loan_channel_partner.name = loan.custom_channel_partner
 										LEFT JOIN `tabBranch` as branch ON loan.hub = branch.name
 										{where_clause}
-										GROUP BY demand.loan, demand.demand_date
+										GROUP BY demand.loan
 										{order_by}""", as_dict=1)
 
 	response = []

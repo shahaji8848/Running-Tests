@@ -10,6 +10,10 @@ from frappe.utils.data import flt
 
 class BillofSupply(Document):
     def before_save(self):
+        if self.customer_urn:
+            self.customer = frappe.db.get_value('Customer', self.customer_urn, 'customer_name')
+        if self.applicant_urn:
+            self.applicant = frappe.db.get_value('Customer', self.applicant_urn, 'customer_name')
         total = 0
         for item in self.items:
             total += flt(item.amount)

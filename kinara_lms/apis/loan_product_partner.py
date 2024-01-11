@@ -4,10 +4,27 @@ import frappe
 def get_prod_attr(product):
     if product != None:
         values = {'product': product}
-        data = frappe.db.sql("""
+        data = {}
+        loan_partner = frappe.db.sql("""
             SELECT
-                IfNull(GROUP_CONCAT(DISTINCT lplp.loan_partner), '') AS loan_partners,
-                IfNull(GROUP_CONCAT(DISTINCT lc.charge_type), '') AS charge_type,
+                IfNull(GROUP_CONCAT(DISTINCT loan_partner), '') AS loan_partners
+                from `tabLoan Product Loan Partner`
+            WHERE parent = %(product)s
+        """, values=values, as_dict=1)
+
+        if loan_partner:
+            data.update(loan_partner[0])
+        charge_type = frappe.db.sql("""
+            SELECT
+                IfNull(GROUP_CONCAT(DISTINCT charge_type), '') AS charge_type
+                from  `tabLoan Charges`
+            WHERE parent = %(product)s
+        """, values=values, as_dict=1)
+        if charge_type:
+            data.update(charge_type[0])
+
+        data1 = frappe.db.sql("""
+            SELECT
                 IfNull(lp.name,'') AS name,
                 IfNull(lp.creation,'') AS creation,
                 IfNull(lp.docstatus,'') AS docstatus,
@@ -96,16 +113,15 @@ def get_prod_attr(product):
                 IfNull(lp.custom_default_loan_amount,'') AS custom_default_loan_amount,
                 IfNull(lp.custom_minimum_spread_rate,'') AS custom_minimum_spread_rate,
                 IfNull(lp.custom_maximum_spread_rate,'') AS custom_maximum_spread_rate,
+                IfNull(lp.custom_minimum_rate_of_interest,'') AS custom_minimum_rate_of_interest,
+                IfNull(lp.custom_maximum_rate_of_interest,'') AS custom_maximum_rate_of_interest,
                 IfNull(lp.custom_interest_treatment_after_moratorium_period,'') AS custom_interest_treatment_after_moratorium_period,
                 IfNull(lp.custom_is_bill_discounting_product,'') AS custom_is_bill_discounting_product
-
             FROM `tabLoan Product` lp
-                INNER JOIN `tabLoan Product Loan Partner` lplp
-                ON lp.name = lplp.parent
-                JOIN `tabLoan Charges` lc
-                ON lp.name = lc.parent
-                
             WHERE lp.name = %(product)s
-            
+
         """, values=values, as_dict=1)
+        if data1:
+            data.update(data1[0])
+        
         return data
