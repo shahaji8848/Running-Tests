@@ -117,7 +117,7 @@ def get_loan_demand_data(filters):
 										LEFT JOIN `tabLoan Channel Partner` as loan_channel_partner ON loan_channel_partner.name = loan.custom_channel_partner
 										LEFT JOIN `tabBranch` as branch ON loan.hub = branch.name
 										{where_clause}
-										GROUP BY demand.loan, demand.date
+										GROUP BY demand.loan, demand.demand_date
 										{order_by}""", as_dict=1)
 
 	response = []
