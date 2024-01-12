@@ -53,7 +53,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "ti_number.",
+   "fetch_from": "ti_number.company_gstin",
    "fieldname": "company_gstin",
    "fieldtype": "Data",
    "label": "Company GSTIN"
@@ -106,12 +106,12 @@
    "fetch_from": ".",
    "fetch_if_empty": 1,
    "fieldname": "applicant",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Applicant",
    "options": "Customer"
   },
   {
-   "fetch_from": "ti_number.billing_address_gstin",
+   "fetch_from": ".billing_address_gstin",
    "fieldname": "customer_gstin",
    "fieldtype": "Data",
    "label": "Customer GSTIN"
@@ -121,7 +121,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "ti_number.",
+   "fetch_from": "ti_number.company_address",
    "fieldname": "company_address",
    "fieldtype": "Link",
    "label": "Company Address",
@@ -185,7 +185,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-11 13:50:09.312463",
+ "modified": "2024-01-12 16:59:48.033109",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",
