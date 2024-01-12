@@ -88,6 +88,7 @@ def create_collateral(args):
 		"unit_of_measure": "Nos",
 		"loan_security_type": args.loan_security_type,
 		"loan_security_subtype": args.loan_security_subtype,
+		"kinara_collateral_type": args.kinara_collateral_type,
 		"kinara_collateral_subtype": args.kinara_collateral_subtype,
 		"original_security_value": args.collateral_value,
 		"kinara_collateral_condition": args.kinara_collateral_condition,
