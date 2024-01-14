@@ -105,4 +105,6 @@ def set_company_amount_and_loan_partner_amount_values(doc):
     for item in doc.items:
         if flt(item.qty)*flt(item.rate) != flt(item.amount):
             amount = item.qty*item.rate
+        else:
+            amount = item.amount
         item.company_amount = flt(amount) - flt(item.loan_partner_amount)
