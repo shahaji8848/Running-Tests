@@ -11,6 +11,16 @@ def on_update(doc,method=None):
             doc.loan_partner_gstin = None
         set_company_billing_address(doc)
         set_company_amount_and_loan_partner_amount_values(doc)
+
+def on_submit(doc,method=None):
+    if doc.loan:
+        recalculate_item_again = False
+        for item in doc.items:
+           if (item.amount != 0 and item.ratio_percentage != 100 and item.company_amount == 0) or (flt(item.qty)*flt(item.rate) != item.amount):
+                recalculate_item_again = True
+                break
+        if recalculate_item_again:
+            set_company_amount_and_loan_partner_amount_values(doc)
         
     
 def set_individual_applicant_name_and_mobile_no(doc):
@@ -82,8 +92,12 @@ def set_company_amount_and_loan_partner_amount_values(doc):
             else:
                 for row in loan_partner.shareables:
                     if item.item_code == row.shareable_type:
+                        if flt(item.qty)*flt(item.rate) != item.amount:
+                            amount = flt(item.qty)*flt(item.rate)
+                        else:
+                            amount = item.amount
                         item.ratio_percentage = flt(row.partner_collection_percentage)
-                        item.loan_partner_amount = (flt(item.amount)*flt(row.partner_collection_percentage))/100
+                        item.loan_partner_amount = (flt(amount)*flt(row.partner_collection_percentage))/100
                         break
                     else:
                         item.ratio_percentage = 0
@@ -93,4 +107,8 @@ def set_company_amount_and_loan_partner_amount_values(doc):
             item.ratio_percentage = 0
             item.loan_partner_amount = 0
     for item in doc.items:
-        item.company_amount = flt(item.amount) - flt(item.loan_partner_amount)
+        if flt(item.qty)*flt(item.rate) != item.amount:
+            amount = flt(item.qty)*flt(item.rate)
+        else:
+            amount = item.amount
+        item.company_amount = flt(amount) - flt(item.loan_partner_amount)

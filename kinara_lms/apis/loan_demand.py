@@ -28,6 +28,7 @@ def get_demand_data(**kwargs):
 
     demands_details  = frappe.db.sql(f"""
                                         SELECT COALESCE(NULLIF(co_lending_partner.partner_name,''), NULLIF(loan_channel_partner.name1,''), loan.company) as "partner_name",
+                                            GROUP_CONCAT(demand.name) as "Demand Names",
                                             loan.sponsor_bank_code as "Sponsor Bank Code", 
                                             loan.hub as "Hub", 
                                             loan.name as "AccountID", 
@@ -87,6 +88,7 @@ def get_demand_data(**kwargs):
             "Bank Name": None,
             "Branch Name": None,
             # "Demand Name": demand_detail["Demand Name"],
+            "Demand Names":  demand_detail["Demand Names"].split(","),
             "Realization Status": demand_detail["Realization Status"],
             "Realization Reason": demand_detail["Realization Reason"],
             "Realization Date": demand_detail["Realization Date"],
@@ -143,23 +145,37 @@ def update_bulk_loan_demand(**kwargs):
     }
     body = json.loads(frappe.request.data)
     for data in body["data"]:
-        response_dict = {
-			"status" : "",
-		}
         try:
             if "name" not in data:
                 frappe.throw("Record Name Is Mandatory")
-            doc = frappe.get_doc("Loan Demand",data["name"])
-            for key in data.keys():
-                if key in allowed_fields:
-                    doc.set(key, data[key])
-            doc.save()
-            response_dict["name"] = doc.name
-            response_dict["status"] = "success"
-            response_dict["message"] = "record updated"
-            response_dict["doc"] = doc
+            if isinstance(data['name'], list) and len(data['name']) == 0:
+                frappe.throw("Name List Cannot be empty")
+            if isinstance(data['name'], str):
+                names = [data['name']]
+            else:
+                names = data['name']
+            for name in names:
+                response_dict = {
+			        "status" : "",
+		        }
+                try:
+                    doc = frappe.get_doc("Loan Demand",name)
+                    for key in data.keys():
+                        if key in allowed_fields:
+                            doc.set(key, data[key])
+                    doc.save()
+                    response_dict["name"] = doc.name
+                    response_dict["status"] = "success"
+                    response_dict["message"] = "record updated"
+                    response_dict["doc"] = doc
+                except Exception as e:
+                    response_dict["status"] = "error"
+                    response_dict["message"] = str(e)
+                response["data"].append(response_dict)
         except Exception as e:
-            response_dict["status"] = "error"
-            response_dict["message"] = e
-        response["data"].append(response_dict)
+            error_response = {
+			        "status" : "error",
+                    "message" : str(e)
+		        }
+            response["data"].append(error_response)
     return response
