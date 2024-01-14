@@ -23,7 +23,6 @@ def generate_bill_of_supply(doc, method=None):
             bs_doc.loan_installment_date = doc.demand_date
             bs_doc.loan_demand_detail = doc.name
             bs_doc.demand_type = doc.demand_type
-            bs_doc.posting_date = datetime.datetime.now().date()
             if doc.demand_type == "EMI":
                 bs_doc.repayment_schedule_detail = doc.repayment_schedule_detail
                 try:
@@ -36,6 +35,6 @@ def generate_bill_of_supply(doc, method=None):
                 bs_doc.append('items',{'particulars':"Interest Amount",'amount':interest})
             if doc.demand_type == "Charges":
                 charges = flt(doc.demand_amount) - flt(doc.paid_amount)
-                bs_doc.append('items',{'particulars': doc.demand_subtype+" Amount",'amount':charges})
+                bs_doc.append('items',{'particulars': (doc.demand_subtype or "")+" Amount",'amount':charges})
             bs_doc.save()
             bs_doc.submit()
