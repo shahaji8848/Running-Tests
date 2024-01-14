@@ -38,9 +38,9 @@ def get_outstanding_principal(**kwargs):
 	join_clause = ""
 	if kwargs["group_by"] in ["branch", "hub_code", "hub_name", "hub_id", "zone_name", "zone_code", "division", "division_code", "region_name", "region_code"]:
 		if kwargs["group_by"] == "branch":
-			group_by = f"loan.{kwargs['group_by']}"
+			group_by = f"loan.hub"
 		else:
-			join_clause = "JOIN `tabBranch` as branch ON loan.branch = branch.branch"
+			join_clause = "JOIN `tabBranch` as branch ON loan.hub = branch.branch"
 			group_by = f"branch.{kwargs['group_by']}"
 		if "group_by_value" in kwargs and kwargs["group_by_value"]:
 			where_clause = f"""WHERE {group_by} = "{kwargs["group_by_value"]}" """
