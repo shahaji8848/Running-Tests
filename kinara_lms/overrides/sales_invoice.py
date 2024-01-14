@@ -16,7 +16,7 @@ def on_submit(doc,method=None):
     if doc.loan:
         recalculate_item_again = False
         for item in doc.items:
-           if (flt(item.amount) != 0 and flt(item.ratio_percentage) != 100 and flt(item.company_amount) == 0) or (flt(item.qty)*flt(item.rate) != flt(item.amount)):
+           if (item.amount != 0 and item.ratio_percentage != 100 and item.company_amount == 0) or (flt(item.qty)*flt(item.rate) != item.amount):
                 recalculate_item_again = True
                 break
         if recalculate_item_again:
@@ -103,8 +103,8 @@ def set_company_amount_and_loan_partner_amount_values(doc):
             item.ratio_percentage = 0
             item.loan_partner_amount = 0
     for item in doc.items:
-        if flt(item.qty)*flt(item.rate) != flt(item.amount):
-            amount = item.qty*item.rate
+        if flt(item.qty)*flt(item.rate) != item.amount:
+            amount = flt(item.qty)*flt(item.rate)
         else:
             amount = item.amount
         item.company_amount = flt(amount) - flt(item.loan_partner_amount)
