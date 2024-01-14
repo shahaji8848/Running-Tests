@@ -54,14 +54,8 @@ def get_loan_demand_data(filters):
 		from_date = filters.from_date
 		to_date = filters.to_date
 	else:
-		date = frappe.db.sql(f"""SELECT demand.demand_date
-					   			FROM `tabLoan Demand` as demand
-					   			WHERE demand.demand_type = 'EMI'
-					   			ORDER BY demand.demand_date DESC
-								LIMIT 1
-								""")
-		from_date = date[0][0]
-		to_date = date[0][0]
+		from_date = frappe.utils.today()
+		to_date = frappe.utils.today()
 	if report_type == "Scheduled":	
 		if filters.from_date and filters.to_date:
 			if filters.from_date != filters.to_date:
@@ -74,14 +68,15 @@ def get_loan_demand_data(filters):
 				from_date = filters.to_date
 				to_date = filters.to_date
 
-			
-	conditions.append(f"demand.demand_date <= '{to_date}' ")
-	conditions.append(f"demand.demand_date >= '{from_date}' ")
 	order_by = ""
 	if report_type == "Scheduled":	
 		conditions.append(f"demand.demand_type = 'EMI'")
+		conditions.append(f"demand.demand_date = '{to_date}' ")
+		conditions.append(f"demand.demand_date = '{from_date}' ")
 		subquery_conditions.append(f"ld.demand_date = '{to_date}'")
 	elif report_type == "overdue":
+		conditions.append(f"demand.demand_date <= '{to_date}' ")
+		conditions.append(f"demand.demand_date >= '{from_date}' ")
 		subquery_conditions.append(f"ld.demand_date <= '{to_date}'")
 		order_by = "ORDER BY installment_details.payment_date DESC"
 	

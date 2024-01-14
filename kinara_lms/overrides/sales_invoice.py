@@ -11,6 +11,16 @@ def on_update(doc,method=None):
             doc.loan_partner_gstin = None
         set_company_billing_address(doc)
         set_company_amount_and_loan_partner_amount_values(doc)
+
+def on_submit(doc,method=None):
+    if doc.loan:
+        recalculate_item_again = False
+        for item in doc.items:
+           if (flt(item.amount) != 0 and flt(item.ratio_percentage) != 100 and flt(item.company_amount) == 0) or (flt(item.qty)*flt(item.rate) != flt(item.amount)):
+                recalculate_item_again = True
+                break
+        if recalculate_item_again:
+            set_company_amount_and_loan_partner_amount_values(doc)
         
     
 def set_individual_applicant_name_and_mobile_no(doc):
@@ -93,4 +103,6 @@ def set_company_amount_and_loan_partner_amount_values(doc):
             item.ratio_percentage = 0
             item.loan_partner_amount = 0
     for item in doc.items:
-        item.company_amount = flt(item.amount) - flt(item.loan_partner_amount)
+        if flt(item.qty)*flt(item.rate) != flt(item.amount):
+            amount = item.qty*item.rate
+        item.company_amount = flt(amount) - flt(item.loan_partner_amount)
