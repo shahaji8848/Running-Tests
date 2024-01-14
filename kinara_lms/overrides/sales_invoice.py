@@ -92,8 +92,12 @@ def set_company_amount_and_loan_partner_amount_values(doc):
             else:
                 for row in loan_partner.shareables:
                     if item.item_code == row.shareable_type:
+                        if flt(item.qty)*flt(item.rate) != item.amount:
+                            amount = flt(item.qty)*flt(item.rate)
+                        else:
+                            amount = item.amount
                         item.ratio_percentage = flt(row.partner_collection_percentage)
-                        item.loan_partner_amount = (flt(item.amount)*flt(row.partner_collection_percentage))/100
+                        item.loan_partner_amount = (flt(amount)*flt(row.partner_collection_percentage))/100
                         break
                     else:
                         item.ratio_percentage = 0
