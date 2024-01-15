@@ -46,53 +46,55 @@ def get_short_pdc(**kwargs):
 																									FROM `tabLoan` as ln
 																									JOIN `tabLoan ACH` as loan_ach ON ln.name = loan_ach.loan) AND lrs.name IS NULL """, as_dict = True)
 	short_pdc.append(ach_not_present_and_repayment_schedule_not_present)
-	pdc_not_mapped = frappe.db.sql("""SELECT DISTINCT loan.name as "Loan", 
-											   		loan.applicant as "Customer URN", 
-											   		entity.customer_name as "Business Entity Name", 
-											   		COUNT(rs.name)-lrs.total_installments_paid as "Count of short PDC", 
-											   		GROUP_CONCAT(rs.payment_date) as "Next Due Date", 
-											   		lrs.total_installments_paid as "Total Installment Paid",
-													FROM `tabLoan` as loan
-													JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
-													JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
-													LEFT JOIN `tabLoan PDC` as pdc ON pdc.emi = rs.name 
-											   										AND pdc.loan = loan.name 
-											   										AND pdc.loan_repayment_schedule = lrs.name 
-											   										AND pdc.status != "Active"
-													LEFT JOIN `tabCustomer` as entity
-													ON entity.name = loan.applicant
-													WHERE lrs.status = "Active"
-													GROUP BY rs.parent""", as_dict = True)
+	active_and_presented_pdc = frappe.db.sql("""SELECT lrs.name as "lrs", 
+										  		rs.idx as "rs_idx"
+												FROM `tabLoan` as loan
+												JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
+												JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
+												LEFT JOIN `tabLoan PDC` as pdc 
+												ON pdc.emi = rs.name 
+												AND pdc.loan = loan.name 
+												AND pdc.loan_repayment_schedule = lrs.name
+										  		AND (pdc.status = "Active" OR pdc.status = "Presented")
+												""", as_dict = True)
+	active_and_presented_pdc_dict = {d["lrs"]: sorted(d["rs_idx"].split(','), key=lambda x: int(x)) for d in active_and_presented_pdc}
+
+	mapped_and_unmapped_pdc = frappe.db.sql("""SELECT loan.name as "loan", 
+												lrs.name as "lrs", 
+												lrs.total_installments_paid as "tip",
+												GROUP_CONCAT(rs.idx) as "rs_idx",
+										 		loan.applicant as "Customer URN", 
+												entity.customer_name as "Business Entity Name" 
+												FROM `tabLoan` as loan
+												JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
+												JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
+										 		LEFT JOIN `tabCustomer` as entity ON entity.name = loan.applicant
+												LEFT JOIN `tabLoan PDC` as pdc 
+												ON pdc.emi = rs.name 
+												AND pdc.loan = loan.name 
+												AND pdc.loan_repayment_schedule = lrs.name
+												GROUP BY lrs.name
+												""", as_dict = True)
+	for pdc in mapped_and_unmapped_pdc:
+		pdc["rs_idx"] = sorted(pdc["rs_idx"].split(','), key=lambda x: int(x))
+		pdc["rs_idx"] = pdc["rs_idx"][pdc["tip"]:]
+		result_list = [num for num in pdc["rs_idx"] if num not in active_and_presented_pdc_dict[pdc["lrs"]]]
+		pdc["Count of Short PDC"] = len(result_list)
+		if len(result_list) > 0:
+			next_due_date = frappe.db.sql(f"""SELECT rs.payment_date as "Payment Date"
+												FROM `tabLoan` as loan
+												JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
+												JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
+												WHERE loan.name = "{pdc["loan"]}"
+												AND lrs.name = "{pdc["lrs"]}"
+												AND rs.idx = "{result_list[0]}"
+												""", as_dict = True)
+			pdc["Next Due Date for which PDC is not available"] = next_due_date[0]["Payment Date"]
+		else:
+			pdc["Next Due Date for which PDC is not available"] = None
+
 	
-	
-	pdc_not_mapped_or_not_present = frappe.db.sql("""SELECT DISTINCT loan.name as "Loan", 
-											   		loan.applicant as "Customer URN", 
-											   		entity.customer_name as "Business Entity Name", 
-											   		COUNT(rs.name)-lrs.total_installments_paid as "Count of short PDC", 
-											   		GROUP_CONCAT(rs.payment_date) as "Next Due Date", 
-											   		lrs.total_installments_paid as "Total Installment Paid",
-													FROM `tabLoan` as loan
-													JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
-													JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
-													LEFT JOIN `tabLoan PDC` as pdc ON pdc.emi = rs.name 
-											   										AND pdc.loan = loan.name 
-											   										AND pdc.loan_repayment_schedule = lrs.name 
-											   										AND pdc.status != "Active"
-													LEFT JOIN `tabCustomer` as entity
-													ON entity.name = loan.applicant
-													WHERE lrs.status = "Active"
-													GROUP BY rs.parent""", as_dict = True)
-	for record in pdc_not_mapped_or_not_present:
-		date_objects = [datetime.datetime.strptime(date, "%Y-%m-%d").date() for date in record["Next Due Date"].split(",")]
-		sorted_dates = sorted(date_objects)
-		try:
-			record["Next Due Date for which PDC is not available"] = sorted_dates[record["Total Installment Paid"]]
-		except Exception as e:
-			record["Next Due Date for which PDC is not available"] = None
-		record.pop("Next Due Date", None)
-		record.pop("Total Installment Paid", None)
-	
-	short_pdc.append(pdc_not_mapped_or_not_present)
+	short_pdc.append()
 
 	return short_pdc
 		
