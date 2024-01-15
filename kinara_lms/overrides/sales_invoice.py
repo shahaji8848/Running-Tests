@@ -37,7 +37,9 @@ def set_company_billing_address(doc):
     result = None
     if company_gst_regime == "Decentralized":
         customer_state = frappe.db.get_value('Address', doc.customer_address, 'state')
-        filter = f"""ads.state = "{customer_state}" """ #get company address matching customer's state
+        if customer_state is None:
+            customer_state = frappe.db.get_value('Address', doc.customer_address, 'gst_state')
+        filter = f"""ads.state = "{customer_state}" OR ads.gst_state = "{customer_state}" """ #get company address matching customer's state
         result = execute_query(doc.company, filter, "Company")     #will return state if customer is present in company state
     if not result:
         filter = f"ads.is_primary_address = 1"          #get company primary address
@@ -54,7 +56,9 @@ def set_loan_partner_address(doc,method=None):
     result = None
     if loan_partner_gst_regime == "Decentralized":
         customer_state = frappe.db.get_value('Address', doc.customer_address, 'state')
-        filter = f"""ads.state = "{customer_state}" """ #get loan partner address matching customer's state
+        if customer_state is None:
+            customer_state = frappe.db.get_value('Address', doc.customer_address, 'gst_state')
+        filter = f"""ads.state = "{customer_state}" OR ads.gst_state = "{customer_state}" """ #get loan partner address matching customer's state
         result = execute_query(doc.loan_partner, filter, "Loan Partner")     #will return state if customer is present in loan partner state
     if not result:
         filter = f"ads.is_primary_address = 1"          #get loan partner primary address
