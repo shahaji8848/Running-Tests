@@ -18,10 +18,10 @@ def update_bank_account(**kwargs):
                 if key in allowed_fields:
                     doc.set(key, data[key])
         doc.save()
-        if "bank_account_no" in data.keys() and data["bank_account_no"] is not None:
-            if data["bank_account_no"] != doc.name:
-                frappe.rename_doc("Bank Account", data["name"], data["bank_account_no"], merge=False)
-                doc = frappe.get_doc("Bank Account",data["bank_account_no"])
+        if "account_name" in data.keys() and data["account_name"] is not None:
+            if data["account_name"] != doc.name:
+                frappe.rename_doc("Bank Account", data["name"], data["account_name"], merge=False)
+                doc = frappe.get_doc("Bank Account",data["account_name"])
         response_dict["name"] = doc.name
         response_dict["status"] = "success"
         response_dict["message"] = "record updated"
