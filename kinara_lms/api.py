@@ -1,6 +1,7 @@
 import json
 
 import frappe
+from frappe.utils import cint
 
 from lending.loan_management.doctype.loan_security_assignment.loan_security_assignment import (
 	release_loan_security_assignment,
@@ -54,8 +55,9 @@ def update_charge(args):
 		charge.item_name = args.charge_name
 	if args.gst_hsn_code:
 		charge.gst_hsn_code = args.gst_hsn_code
-	if args.tax_inclusive:
-		charge.tax_inclusive = args.tax_inclusive
+	
+	charge.tax_inclusive = cint(args.tax_inclusive)
+
 	if "tax_applicable" in args:
 		if args.tax_applicable:
 			charge.is_nil_exempt = 0
@@ -86,6 +88,7 @@ def create_collateral(args):
 		"unit_of_measure": "Nos",
 		"loan_security_type": args.loan_security_type,
 		"loan_security_subtype": args.loan_security_subtype,
+		"kinara_collateral_type": args.kinara_collateral_type,
 		"kinara_collateral_subtype": args.kinara_collateral_subtype,
 		"original_security_value": args.collateral_value,
 		"kinara_collateral_condition": args.kinara_collateral_condition,

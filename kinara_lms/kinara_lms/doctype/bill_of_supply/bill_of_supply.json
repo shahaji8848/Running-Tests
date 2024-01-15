@@ -53,7 +53,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "ti_number.",
+   "fetch_from": "ti_number.company_gstin",
+   "fetch_if_empty": 1,
    "fieldname": "company_gstin",
    "fieldtype": "Data",
    "label": "Company GSTIN"
@@ -72,7 +73,7 @@
    "label": "Company State Code"
   },
   {
-   "fetch_from": "ti_number.place_of_supply",
+   "fetch_from": ".place_of_supply",
    "fieldname": "place_of_supply",
    "fieldtype": "Data",
    "label": "Place of Supply"
@@ -90,28 +91,31 @@
    "label": "Posting Date"
   },
   {
-   "fetch_from": ".",
+   "fetch_from": "customer_urn.customer_name",
+   "fetch_if_empty": 1,
    "fieldname": "customer",
    "fieldtype": "Data",
    "label": "Customer"
   },
   {
    "fetch_from": "ti_number.customer_address",
+   "fetch_if_empty": 1,
    "fieldname": "customer_address",
    "fieldtype": "Link",
    "label": "Customer Address",
    "options": "Address"
   },
   {
-   "fetch_from": ".",
+   "fetch_from": "applicant_urn.customer_name",
    "fetch_if_empty": 1,
    "fieldname": "applicant",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Applicant",
    "options": "Customer"
   },
   {
-   "fetch_from": "ti_number.billing_address_gstin",
+   "fetch_from": "customer_address.gstin",
+   "fetch_if_empty": 1,
    "fieldname": "customer_gstin",
    "fieldtype": "Data",
    "label": "Customer GSTIN"
@@ -121,7 +125,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "ti_number.",
+   "fetch_from": "ti_number.company_address",
+   "fetch_if_empty": 1,
    "fieldname": "company_address",
    "fieldtype": "Link",
    "label": "Company Address",
@@ -185,7 +190,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-11 13:50:09.312463",
+ "modified": "2024-01-14 13:03:27.833503",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Bill of Supply",

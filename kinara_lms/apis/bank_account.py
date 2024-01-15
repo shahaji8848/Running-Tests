@@ -32,3 +32,11 @@ def update_bank_account(**kwargs):
         response_dict["status"] = "error"
         response_dict["message"] = e
     return response_dict
+
+@frappe.whitelist()
+def get_comp_act(**kwargs):
+    if frappe.db.exists('Bank Account',{'bank_account_no':kwargs['bank_account_no'],'is_company_account':1}):
+        comp_act = frappe.db.get_value('Bank Account',{'bank_account_no':kwargs['bank_account_no']},'account')
+        return comp_act
+    else:
+        frappe.msgprint(f"This Bank Account {kwargs['bank_account_no']} is not Company Account")
