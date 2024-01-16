@@ -76,7 +76,7 @@ def get_active_and_presented_pdc():
 	active_and_presented_pdc = frappe.db.sql("""SELECT lrs.name as "lrs", 
 										  		GROUP_CONCAT(rs.payment_date) as "rs_payment_date"
 												FROM `tabLoan` as loan
-												JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
+												JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name AND lrs.status = "Active"
 												JOIN `tabRepayment Schedule` as rs ON rs.parent = lrs.name
 												JOIN `tabLoan PDC` as pdc 
 												ON pdc.emi = rs.name 
