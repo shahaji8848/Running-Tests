@@ -60,16 +60,16 @@ def get_short_pdc(**kwargs):
 		
 def get_ach_not_present_and_repayment_schedule_not_present():
 	ach_not_present_and_repayment_schedule_not_present = frappe.db.sql("""SELECT loan.name as "Loan", 
-						loan.applicant as "Customer URN", 
-						entity.customer_name as "Business Entity Name", 
-						"" as "Count of short PDC", 
-						"" as "Next Due Date for which PDC is not available"
-						FROM `tabLoan` as loan
-						LEFT JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
-						LEFT JOIN `tabCustomer` as entity ON entity.name = loan.applicant
-						WHERE loan.name NOT IN (SELECT ln.name
-												FROM `tabLoan` as ln
-												JOIN `tabLoan ACH` as loan_ach ON ln.name = loan_ach.loan) AND lrs.name IS NULL """, as_dict = True)
+																		loan.applicant as "Customer URN", 
+																		entity.customer_name as "Business Entity Name", 
+																		"" as "Count of short PDC", 
+																		"" as "Next Due Date for which PDC is not available"
+																		FROM `tabLoan` as loan
+																		LEFT JOIN `tabLoan Repayment Schedule` as lrs ON lrs.loan = loan.name
+																		LEFT JOIN `tabCustomer` as entity ON entity.name = loan.applicant
+																		WHERE loan.name NOT IN (SELECT ln.name
+																								FROM `tabLoan` as ln
+																								JOIN `tabLoan ACH` as loan_ach ON ln.name = loan_ach.loan) AND lrs.name IS NULL """, as_dict = True)
 	return ach_not_present_and_repayment_schedule_not_present
 
 def get_active_and_presented_pdc():
