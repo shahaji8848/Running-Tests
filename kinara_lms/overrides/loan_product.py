@@ -16,10 +16,10 @@ def validate_loan_product_code(doc, method=None):
 		elif (doc.maximum_loan_amount < doc.custom_default_loan_amount) or (doc.custom_default_loan_amount < doc.custom_minimum_loan_amount):
 			frappe.throw("Default Loan Amount Has to be between Minimum and Maximum Loan Amount")
 
-		if 	doc.custom_maximum_tenure and doc.custom_minimum_tenure:
-			if doc.custom_maximum_tenure <  doc.custom_minimum_tenure:
+		if 	doc.custom_maximum_tenure1 and doc.custom_minimum_tenure1:
+			if doc.custom_maximum_tenure1 <  doc.custom_minimum_tenure1:
 				frappe.throw("Maximum Tenure Has to be more than Minimum Tenure")
 
-		if doc.custom_maximum_tenure and doc.custom_default_tenure and doc.custom_minimum_tenure:
-			if (doc.custom_maximum_tenure < doc.custom_default_tenure) or (doc.custom_default_tenure < doc.custom_minimum_tenure):
+		if doc.custom_maximum_tenure1 and doc.custom_default_tenure1 and doc.custom_minimum_tenure1:
+			if (doc.custom_maximum_tenure1 < doc.custom_default_tenure1) or (doc.custom_default_tenure1 < doc.custom_minimum_tenure1):
 				frappe.throw("Default Tenure Has to be between Minimum and Maximum Tenure")		
