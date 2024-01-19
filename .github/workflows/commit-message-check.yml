@@ -3,7 +3,7 @@ name: Enforce Commit Message Length
 on:
   pull_request:
     branches:
-      - main
+      - ESCROW_KC2_I166
 
 jobs:
   enforce-commit-message-length:
