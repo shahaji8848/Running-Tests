@@ -1,7 +1,7 @@
 name: Commit Message Length Check
 
 on:
-  push:
+  pull_request:
     branches:
       - ESCROW_KC2_I166
 
@@ -15,10 +15,11 @@ jobs:
 
     - name: Check Commit Message Length
       run: |
-        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        COMMIT_MESSAGE=$(git log --pretty=%B $GITHUB_SHA^..$GITHUB_SHA)
         COMMIT_LENGTH=${#COMMIT_MESSAGE}
 
         if [ $COMMIT_LENGTH -gt 15 ]; then
           echo "Error: Commit message length exceeds 15 characters."
           exit 1
         fi
+
