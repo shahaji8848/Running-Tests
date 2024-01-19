@@ -1,0 +1,30 @@
+name: Commit Message Check
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+
+jobs:
+  check-commit-messages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
+
+    - name: Check Commit Messages
+      run: |
+        COMMIT_MESSAGES=$(git log --format=%s origin/main..HEAD)
+        IFS=$'\n'
+        for MESSAGE in $COMMIT_MESSAGES; do
+          if [ ${#MESSAGE} -lt 15 ] || [ ${#MESSAGE} -gt 20 ]; then
+            echo "Commit message '${MESSAGE}' is not within the character limit of 15-20."
+            exit 1
+          fi
+        done
