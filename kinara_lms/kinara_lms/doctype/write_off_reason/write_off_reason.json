@@ -1,14 +1,3 @@
- "links": [],
- "modified": "2023-11-30 14:02:35.952227",
- "modified_by": "Administrator",
- "module": "Kinara LMS",
- "name": "Write Off Reason",
- "naming_rule": "By fieldname",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
