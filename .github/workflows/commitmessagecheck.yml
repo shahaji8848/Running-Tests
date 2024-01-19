@@ -3,7 +3,7 @@ name: Commit Message Check
 on:
   push:
     branches:
-      - main
+      - ESCROW_KC2_I166
 
 jobs:
   check-commit-messages:
