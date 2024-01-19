@@ -1,24 +1,25 @@
-name: Commit Message Length Check
+name: Commit Message Check
 
 on:
-  pull_request:
+  push:
     branches:
       - ESCROW_KC2_I166
 
 jobs:
-  commit-message-check:
+  commit_message_check:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Check Commit Message Length
+    - name: Check commit message length
       run: |
-        COMMIT_MESSAGE=$(git log --pretty=%B $GITHUB_SHA^..$GITHUB_SHA)
-        COMMIT_LENGTH=${#COMMIT_MESSAGE}
-
-        if [ $COMMIT_LENGTH -ge 15 ]; then
+        commit_message_length=$(git log -1 --pretty=%B | wc -m)
+        
+        if [ "$commit_message_length" -gt 15 ]; then
           echo "Error: Commit message length exceeds 15 characters."
           exit 1
+        else
+          echo "Success: Commit message length is within the acceptable range."
         fi
