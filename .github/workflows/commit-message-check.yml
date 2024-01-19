@@ -1,0 +1,24 @@
+name: Commit Message Check
+
+on:
+  push:
+    branches:
+      - ESCROW_KC2_I166 # Adjust the branch name as needed
+
+jobs:
+  check-commit-message:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check commit message length
+      uses: actions/checkout@v2
+
+    - name: Set commit message length
+      run: |
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        COMMIT_LENGTH=${#COMMIT_MESSAGE}
+        
+        if [ $COMMIT_LENGTH -lt 15 ] || [ $COMMIT_LENGTH -gt 20 ]; then
+          echo "Error: Commit message length must be between 15 and 20 characters."
+          exit 1
+        fi
