@@ -3,7 +3,7 @@ name: Commit Message Length Check
 on:
   push:
     branches:
-      - main # Change this to your main branch name
+      - ESCROW_KC2_I166
 
 jobs:
   commit-message-check:
