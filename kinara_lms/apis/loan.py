@@ -32,15 +32,24 @@ def get_loan_list(hub=None,loan_account_number=None,customer_urn=None,customer_n
 
 @frappe.whitelist()
 def get_outstanding_principal(**kwargs):
-	group_by = "branch"
 	where_clause = ""
-	if "branch" in kwargs:
-		where_clause = f"""WHERE loan.branch = "{kwargs["branch"]}" """
+	join_clause = ""
+	if kwargs["group_by"] in ["branch", "hub_code", "hub_name", "hub_id", "zone_name", "zone_code", "division", "division_code", "region_name", "region_code"]:
+		if kwargs["group_by"] == "branch":
+			group_by = f"loan.{kwargs['group_by']}"
+		else:
+			join_clause = "JOIN `tabBranch` as branch ON loan.branch = branch.branch"
+			group_by = f"branch.{kwargs['group_by']}"
+		if "group_by_value" in kwargs and kwargs["group_by_value"]:
+			where_clause = f"""WHERE {group_by} = "{kwargs["group_by_value"]}" """
+	else:
+		return {"error": "Invalid group_by Parameter. Valid group_by Parameters are: branch/hub_code/hub_name/hub_id/zone_name/zone_code/division/division_code/region_name/region_code"}
 	outstanding_principal = frappe.db.sql(f"""
-    										SELECT
-        										loan.branch, SUM(loan.total_payment - loan.total_interest_payable - loan.total_principal_paid) as outstanding_principal
-    										FROM `tabLoan` as loan
-    										{where_clause}
+											SELECT
+												{group_by}, SUM(loan.total_payment - loan.total_interest_payable - loan.total_principal_paid) as outstanding_principal
+											FROM `tabLoan` as loan
+											{join_clause}
+											{where_clause}
 											GROUP BY {group_by}
 											""", as_dict = True)
 	return outstanding_principal

@@ -2,48 +2,42 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:type_id",
- "creation": "2023-10-16 10:48:49.080642",
- "default_view": "List",
+ "creation": "2023-12-14 20:33:39.200980",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "type_id",
   "value",
-  "category_type",
   "disabled"
  ],
  "fields": [
   {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled"
-  },
-  {
    "fieldname": "type_id",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Type ID",
    "unique": 1
   },
   {
    "fieldname": "value",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Value"
   },
   {
-   "fieldname": "category_type",
-   "fieldtype": "Select",
-   "label": "Category Type",
-   "options": "\nIndividual\nBusiness\nAccount"
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Disabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-30 14:07:40.464225",
+ "modified": "2023-12-15 15:47:12.554535",
  "modified_by": "Administrator",
- "module": "Kinara MDMs",
- "name": "Distance From Branch Office",
+ "module": "Kinara LMS",
+ "name": "Bank Account Purpose",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

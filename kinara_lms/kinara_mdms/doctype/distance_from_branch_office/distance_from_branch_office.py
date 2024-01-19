@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class DistancefromBranchOffice(Document):
+class DistanceFromBranchOffice(Document):
 	pass

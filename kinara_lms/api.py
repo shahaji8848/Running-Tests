@@ -81,6 +81,8 @@ def create_collateral(args):
 		"doctype": "Loan Security",
 		"loan_security_code": args.collateral_id,
 		"loan_security_name": args.collateral_name,
+		"applicant_type": args.applicant_type,
+		"applicant": args.applicant,
 		"unit_of_measure": "Nos",
 		"loan_security_type": "Property",
 		"kinara_collateral_type": args.kinara_collateral_type,

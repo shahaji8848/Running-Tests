@@ -11,10 +11,12 @@
   "section_break_cuw8",
   "loan",
   "mandate_open_date",
+  "ach_end_date",
   "frequency",
   "reference_1",
   "column_break_ivpd",
   "ach_start_date",
+  "thirty_year_end",
   "max_ach_amount",
   "primary_mobile_number",
   "reference_2",
@@ -73,7 +75,7 @@
    "fieldname": "frequency",
    "fieldtype": "Select",
    "label": "Frequency",
-   "options": "Week\nFortnight\nQuarter\nHalf year\nMonth Year"
+   "options": "\nAs And When\nDaily\nWeek\nFortnight\nMonthly\nQuarter\nHalf year"
   },
   {
    "fieldname": "reference_1",
@@ -133,7 +135,7 @@
    "fieldname": "account_type",
    "fieldtype": "Select",
    "label": "Account Type",
-   "options": "Current\nSavings\nCash Credit"
+   "options": "\nCurrent\nSavings\nCash Credit\nOverDraft"
   },
   {
    "fetch_from": "bank_account_number.custom_ifsc_code",
@@ -164,12 +166,23 @@
    "options": "Loan ACH",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "ach_end_date",
+   "fieldtype": "Date",
+   "label": "ACH End Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "thirty_year_end",
+   "fieldtype": "Check",
+   "label": "30 Year End"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-11-09 18:54:17.253973",
+ "modified": "2023-12-12 12:28:12.785888",
  "modified_by": "Administrator",
  "module": "Kinara LMS",
  "name": "Loan ACH",
