@@ -1,8 +1,4 @@
-
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
+": "System Manager",
    "share": 1,
    "write": 1
   }
