@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r path/to/requirements.txt  # Replace 'path/to' with the actual path to your requirements.txt file
+        pip install -r ${GITHUB_WORKSPACE}/.github/helper/requirements.txt
 
     - name: Run tests
       run: |
