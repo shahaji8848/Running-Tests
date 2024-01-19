@@ -18,8 +18,7 @@ jobs:
         COMMIT_MESSAGE=$(git log --pretty=%B $GITHUB_SHA^..$GITHUB_SHA)
         COMMIT_LENGTH=${#COMMIT_MESSAGE}
 
-        if [ $COMMIT_LENGTH -gt 15 ]; then
+        if [ $COMMIT_LENGTH -ge 15 ]; then
           echo "Error: Commit message length exceeds 15 characters."
           exit 1
         fi
-
