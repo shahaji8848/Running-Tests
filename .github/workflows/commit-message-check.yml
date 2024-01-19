@@ -1,25 +1,24 @@
-name: Enforce Commit Message Length
+name: Commit Message Length Check
 
 on:
-  pull_request:
+  push:
     branches:
-      - ESCROW_KC2_I166
+      - main # Change this to your main branch name
 
 jobs:
-  enforce-commit-message-length:
+  commit-message-check:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the code
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set and Validate Commit Message Length
+    - name: Check Commit Message Length
       run: |
-        commit_message=$(git log --format=%B -n 1 ${{ github.event.before }}..${{ github.sha }})
-        commit_length=$(echo $commit_message | wc -c)
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        COMMIT_LENGTH=${#COMMIT_MESSAGE}
 
-        if [ $commit_length -gt 15 ]; then
+        if [ $COMMIT_LENGTH -gt 15 ]; then
           echo "Error: Commit message length exceeds 15 characters."
-          echo "Please provide a commit message with 15 characters or fewer."
           exit 1
         fi
