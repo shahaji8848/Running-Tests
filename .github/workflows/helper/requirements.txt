@@ -1,0 +1,9 @@
+def fa():
+  fb()
+  fc()
+
+def fb():
+  pass
+
+def fc():
+  pass
