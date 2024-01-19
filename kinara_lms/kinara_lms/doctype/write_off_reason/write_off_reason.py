@@ -7,3 +7,10 @@ from frappe.model.document import Document
 
 class WriteOffReason(Document):
 	pass
+
+from frappe.model.document import Document
+
+
+class WriteOffReason(Document):
+        pass
+
