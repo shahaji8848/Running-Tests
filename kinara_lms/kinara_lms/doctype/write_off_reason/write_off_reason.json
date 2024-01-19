@@ -37,6 +37,47 @@
    "label": "Category Type",
    "options": "\nIndividual\nBusiness\nAccount"
   }
+
+
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:type_id",
+ "creation": "2023-11-24 13:36:04.510761",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_id",
+  "value",
+  "category_type",
+  "disabled"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "type_id",
+   "fieldtype": "Data",
+   "label": "Type ID",
+   "unique": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "label": "Value"
+  },
+  {
+   "fieldname": "category_type",
+   "fieldtype": "Select",
+   "label": "Category Type",
+   "options": "\nIndividual\nBusiness\nAccount"
+  }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
