@@ -22,20 +22,23 @@ jobs:
         npm install  # Adjust this command based on your project's requirements
         ls   # List files in the current directory after installation
         npm fund
-        
+
     - name: Check function/method length
       run: |
         # Run a script to analyze function/method length for new or changed files
-        exceeded_functions_js=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.js$' | xargs grep -E '^\s*function\s*[^{]+\s*\{' | grep -vE '^\s*\/\/' | awk 'NF > 10 {print $0}' || true)
-        exceeded_functions_py=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs grep -E '^\s*def\s+\w+\s*\([^)]*\)\s*:' | grep -vE '^\s*#' | awk 'NF > 10 {print $0}' || true)
-        exceeded_functions_json=""  # Add JSON analysis if needed
+        exceeded_functions_js=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.js$' | xargs grep -nE '^\s*function\s*[^{]+\s*\{' | grep -vE '^\s*\/\/' | awk 'NF > 10 {print $0}' || true)
+        exceeded_functions_py=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs grep -nE '^\s*def\s+\w+\s*\([^)]*\)\s*:' | grep -vE '^\s*#' | awk 'NF > 10 {print $0}' || true)
+        # Add JSON analysis if needed
+        exceeded_functions_json=""  
 
         # Combine exceeded functions from all languages
         exceeded_functions="$exceeded_functions_js\n$exceeded_functions_py\n$exceeded_functions_json"
         
-        # If there are exceeded functions, print an error message and fail the workflow
+        # If there are exceeded functions, print an error message with filenames and line numbers, and fail the workflow
         if [ -n "$exceeded_functions" ]; then
           echo "Functions/methods exceeding 10 lines of code found:"
           echo "$exceeded_functions"
           exit 1
+        else
+          echo "No functions/methods exceeding 10 lines of code found."
         fi
