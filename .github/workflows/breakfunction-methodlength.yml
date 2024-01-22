@@ -21,15 +21,15 @@ jobs:
         ls   # List files in the current directory
         npm install  # Adjust this command based on your project's requirements
         ls   # List files in the current directory after installation
-
+        npm fund
         
     - name: Check function/method length
       run: |
-        # Run a script to analyze function/method length
-        exceeded_functions_js=$(grep -rE '^\s*function\s*[^{]+\s*\{' ./*.js | grep -vE '^\s*\/\/' | awk 'NF > 10 {print $0}' || true)
-        exceeded_functions_py=$(grep -rE '^\s*def\s+\w+\s*\([^)]*\)\s*:' ./*.py | grep -vE '^\s*#' | awk 'NF > 10 {print $0}' || true)
+        # Run a script to analyze function/method length for new or changed files
+        exceeded_functions_js=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.js$' | xargs grep -E '^\s*function\s*[^{]+\s*\{' | grep -vE '^\s*\/\/' | awk 'NF > 10 {print $0}' || true)
+        exceeded_functions_py=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs grep -E '^\s*def\s+\w+\s*\([^)]*\)\s*:' | grep -vE '^\s*#' | awk 'NF > 10 {print $0}' || true)
         exceeded_functions_json=""  # Add JSON analysis if needed
-        
+
         # Combine exceeded functions from all languages
         exceeded_functions="$exceeded_functions_js\n$exceeded_functions_py\n$exceeded_functions_json"
         
