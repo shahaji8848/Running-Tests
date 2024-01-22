@@ -19,5 +19,6 @@ jobs:
         commit_message="${{ github.event.pull_request.title }}"
         if [ ${#commit_message} -gt 15 ]; then
           echo "Commit message is too long. Maximum allowed length is 15 characters."
-          exit 1  # This will cause the workflow to fail
+          exit 1  # This will cause the step (and subsequently the workflow) to fail
         fi
+
