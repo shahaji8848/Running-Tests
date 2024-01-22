@@ -1,6 +1,4 @@
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
+
   "type_id",
   "value",
   "category_type",
