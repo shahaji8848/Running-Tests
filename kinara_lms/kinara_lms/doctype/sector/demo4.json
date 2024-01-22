@@ -1,0 +1,162 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:type_id",
+ "creation": "2023-11-29 16:10:49.486584",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_id",
+  "value",
+  "kc_serv_sector",
+  "business_type_code",
+  "kc_serv_flag",
+  "disabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "kc_serv_sector",
+   "fieldtype": "Data",
+   "label": "KC Serv Sector"
+  },
+  {
+   "fieldname": "business_type_code",
+   "fieldtype": "Data",
+   "label": "Business Type Code 01"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "type_id",
+   "fieldtype": "Data",
+   "label": "Type ID",
+   "unique": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "label": "Value"
+  },
+  {
+   "default": "0",
+   "fieldname": "kc_serv_flag",
+   "fieldtype": "Check",
+   "label": "KC Serv Flag"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-04 18:52:33.682254",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Sector",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+
+# Breck function 
+def breck():
+    print("Inside breck function")
+    # Add your breck function code here
+
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:type_id",
+ "creation": "2023-11-29 16:10:49.486584",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_id",
+  "value",
+  "kc_serv_sector",
+  "business_type_code",
+  "kc_serv_flag",
+  "disabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "kc_serv_sector",
+   "fieldtype": "Data",
+   "label": "KC Serv Sector"
+  },
+  {
+   "fieldname": "business_type_code",
+   "fieldtype": "Data",
+   "label": "Business Type Code"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "type_id",
+   "fieldtype": "Data",
+   "label": "Type ID",
+   "unique": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "label": "Value"
+  },
+  {
+   "default": "0",
+   "fieldname": "kc_serv_flag",
+   "fieldtype": "Check",
+   "label": "KC Serv Flag"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-12-04 18:52:33.682254",
+ "modified_by": "Administrator",
+ "module": "Kinara LMS",
+ "name": "Sector",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
