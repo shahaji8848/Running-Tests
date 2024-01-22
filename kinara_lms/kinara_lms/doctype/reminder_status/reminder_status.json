@@ -1,6 +1,3 @@
-   "fieldtype": "Select",
-   "label": "Category Type",
-   "options": "\nIndividual\nBusiness\nAccount"
   }
  ],
  "index_web_pages_for_search": 1,
