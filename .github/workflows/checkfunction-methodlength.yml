@@ -1,0 +1,37 @@
+name: Code Style Check
+
+on:
+  pull_request:
+    paths:
+      - '**/*.js'
+      - '**/*.py'
+      - '**/*.json'
+
+jobs:
+  analyze_code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        npm install  # Replace with the appropriate command for your language
+
+    - name: Check function/method length
+      run: |
+        # Run a script to analyze function/method length
+        exceeded_functions_js=$(grep -rE '^\s*function\s*[^{]+\s*\{' ./*.js | grep -vE '^\s*\/\/' | awk 'NF > 10 {print $0}' || true)
+        exceeded_functions_py=$(grep -rE '^\s*def\s+\w+\s*\([^)]*\)\s*:' ./*.py | grep -vE '^\s*#' | awk 'NF > 10 {print $0}' || true)
+        exceeded_functions_json=""  # Add JSON analysis if needed
+        
+        # Combine exceeded functions from all languages
+        exceeded_functions="$exceeded_functions_js\n$exceeded_functions_py\n$exceeded_functions_json"
+        
+        # If there are exceeded functions, print an error message and fail the workflow
+        if [ -n "$exceeded_functions" ]; then
+          echo "Functions/methods exceeding 10 lines of code found:"
+          echo "$exceeded_functions"
+          exit 1
+        fi
