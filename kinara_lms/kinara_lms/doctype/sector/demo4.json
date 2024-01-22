@@ -24,7 +24,7 @@
   {
    "fieldname": "business_type_code",
    "fieldtype": "Data",
-   "label": "Business Type Code"
+   "label": "Business Type Code 01"
   },
   {
    "default": "0",
