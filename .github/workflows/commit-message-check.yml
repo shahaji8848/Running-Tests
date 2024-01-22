@@ -21,7 +21,9 @@ jobs:
       - name: Check Message Length
         run: |
           message_length=$(echo "${{ steps.commit_message.outputs.message }}" | wc -m)
-          if [ $message_length -le 15 ]; then
-            echo "Commit message must be more than 15 characters."
+          if [ $message_length -lt 1 ] || [ $message_length -gt 15 ]; then
+            echo "Error: Commit message must be between 1 and 15 characters."
             exit 1
+          else
+            echo "Commit message length is acceptable. Proceeding with the merge."
           fi
