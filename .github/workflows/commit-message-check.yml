@@ -1,4 +1,4 @@
-name: Pull Request Workflow
+name: Example Workflow
 
 on:
   pull_request:
@@ -14,6 +14,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Print commit message
-      run: echo "Commit Message: ${{ github.event.pull_request.title }}"
-
+    - name: Check commit message length
+      run: |
+        commit_message="${{ github.event.pull_request.title }}"
+        if [ ${#commit_message} -gt 15 ]; then
+          echo "Commit message is too long. Maximum allowed length is 15 characters."
+          exit 1  # This will cause the workflow to fail
+        fi
