@@ -17,7 +17,7 @@ jobs:
 
       - name: Check Commit Message Length
         run: |
-          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.event.head_commit.message }})
           LENGTH=$(echo -n "$COMMIT_MESSAGE" | wc -m)
 
           if [ $LENGTH -gt 15 ]; then
