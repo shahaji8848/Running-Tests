@@ -1,39 +1,21 @@
-name: Check Commit Message Length
+name: Example Workflow
 
 on:
-  pull_request:
-    types:
-      - synchronize
-      - opened
-      - reopened
+  push:
+    branches:
+      - ESCROW_KC2_I166
 
 jobs:
-  check-commit-message:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Check Commit Message Length
-        run: |
-          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.event.head_commit.message }})
-          LENGTH=$(echo -n "$COMMIT_MESSAGE" | wc -m)
+    - name: Print commit message
+      run: echo "Commit Message: ${{ github.event.head_commit.message }}"
 
-          if [ $LENGTH -gt 15 ]; then
-            echo "Commit message length is greater than 15 characters. Please provide a shorter commit message."
-            exit 1
-          fi
-        shell: bash
+    - name: Count characters in commit message
+      run: echo "Character Count: ${#GITHUB_EVENT_PATH}"
 
-  merge:
-    runs-on: ubuntu-latest
-
-    needs: check-commit-message
-    if: needs.check-commit-message.result == 'success'
-
-    steps:
-      - name: Merge pull request
-        run: |
-          # Your merge command here
-          git merge ${{ github.event.before }} -m "Merged pull request #${{ github.event.number }}"
