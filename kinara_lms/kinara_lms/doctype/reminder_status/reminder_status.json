@@ -1,7 +1,3 @@
- "modified_by": "Administrator",
- "module": "Kinara LMS",
- "name": "Reminder Status",
- "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
