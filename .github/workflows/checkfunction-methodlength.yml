@@ -17,7 +17,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install  # Replace with the appropriate command for your language
+        apt update
+        apt install nodejs
+        node -v
+        apt install npm
 
     - name: Check function/method length
       run: |
