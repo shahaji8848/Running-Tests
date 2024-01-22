@@ -1,7 +1,3 @@
-  "disabled"
- ],
- "fields": [
-  {
    "default": "0",
    "fieldname": "disabled",
    "fieldtype": "Check",
