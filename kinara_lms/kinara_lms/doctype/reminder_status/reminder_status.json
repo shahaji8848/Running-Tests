@@ -1,8 +1,3 @@
-{
- "actions": [],
- "allow_rename": 1,
- "autoname": "field:type_id",
- "creation": "2023-11-24 14:27:38.278942",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
