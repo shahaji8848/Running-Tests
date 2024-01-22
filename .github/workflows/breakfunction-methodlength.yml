@@ -17,7 +17,11 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install
+        pwd  # Print current directory
+        ls   # List files in the current directory
+        npm install  # Adjust this command based on your project's requirements
+        ls   # List files in the current directory after installation
+
         
     - name: Check function/method length
       run: |
