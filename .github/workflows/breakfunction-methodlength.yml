@@ -17,8 +17,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        install npm
-
+        npm install
+        
     - name: Check function/method length
       run: |
         # Run a script to analyze function/method length
