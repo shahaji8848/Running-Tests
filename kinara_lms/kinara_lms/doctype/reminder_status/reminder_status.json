@@ -1,6 +1,4 @@
-   "label": "Value"
-  },
-  {
+
    "fieldname": "category_type",
    "fieldtype": "Select",
    "label": "Category Type",
